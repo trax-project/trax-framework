@@ -1,0 +1,89 @@
+<template>
+    <div>
+
+        <form class="trax-form pb-3" v-show="loaded">
+            <trax-ui-toggle :text="lang.trax_account.common.active_account" :disabled="selfEdit==1" v-model="active">
+            </trax-ui-toggle>
+        </form>
+
+        <div v-show="active && invitation">
+
+            <!-- Invitation button -->
+
+            <div class="trax-form-actions text-right">
+                <button type="button" class="btn btn-round btn-primary" data-toggle="modal" :data-target="'#'+id+'-send-invitation'">
+                    {{ lang.trax_account.common.invitation_email }}
+                </button>
+            </div>
+
+            <!-- Invitation confirm modal -->
+
+            <trax-ui-modal-confirm :id="id+'-send-invitation'" :title="lang.trax_account.common.invitation_email" :bus="bus">
+                {{ lang.trax_account.common.confirm_invitation_email_q }}
+            </trax-ui-modal-confirm>
+    
+        </div>
+    </div>
+</template>
+
+<script>
+    export default {
+    
+        props: {
+            selfEdit: null,
+            invitation: null,
+        },
+        
+        data: function() {
+            return {
+                loaded: false,
+                id: 'trax-account-user-edit',
+                lang: lang,
+                data: {
+                    source_code: null
+                },
+                active: null,
+                password_endpoint: app_url+'invitation/email',
+                bus: this.$bus
+            }
+        },
+
+        computed: {
+
+            internal: function () {
+                return this.data.source_code == 'internal';
+            }
+        },
+        
+        created: function() {
+            this.bus.$on(this.id+'-data', this.setData);
+            this.bus.$on(this.id+'-send-invitation-confirmed', this.resetPassword);
+        },
+
+        watch: {
+            active: function (value) {
+                if (this.loaded) this.bus.$emit(this.id+'-changed', {active: value});
+                this.loaded = true;
+            }
+        },
+
+        methods: {
+
+            setData(data) {
+                this.data = data;
+                this.active = data.active;
+            },
+
+            resetPassword() {
+                var that = this;
+                axios.post(this.password_endpoint, {email: this.data.email})
+                    .then(function (response) {
+                        that.bus.$emit(that.id+'-toastr-success', response.data);
+                    })
+                    .catch(function (error) {
+                        that.bus.$emit(that.id+'-toastr-error', error.response.data);
+                    });
+            }
+        }
+    }
+</script>
