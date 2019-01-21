@@ -38,7 +38,7 @@ class AccountUI extends UIRegistrar
     public function init()
     {
         // Users
-        if (config('trax-account.stores.User.ajax')) {
+        if (config('trax-account.services.users')) {
 
             // Side menu
             $this->sideMenu['users']['accounts'] = [
@@ -49,7 +49,7 @@ class AccountUI extends UIRegistrar
         }
 
         // Groups
-        if (config('trax-account.stores.Group.ajax')) {
+        if (config('trax-account.services.groups')) {
 
             // Side menu
             $this->sideMenu['users']['groups'] = [
@@ -60,7 +60,7 @@ class AccountUI extends UIRegistrar
         }
 
         // Roles
-        if (config('trax-account.stores.Role.ajax')) {
+        if (config('trax-account.services.roles')) {
 
             // Side menu
             $this->sideMenu['users']['roles'] = [
@@ -71,7 +71,7 @@ class AccountUI extends UIRegistrar
         }
 
         // Entities
-        if (config('trax-account.stores.Entity.ajax')) {
+        if (config('trax-account.services.entities')) {
 
             // Side menu
             $this->sideMenu['users']['entities'] = [
@@ -82,7 +82,7 @@ class AccountUI extends UIRegistrar
         }
 
         // Agreements
-        if (config('trax-account.stores.Agreement.ajax')) {
+        if (config('trax-account.services.agreements')) {
 
             // Side menu
             $this->sideMenu['settings']['agreement-edit'] = [
@@ -100,7 +100,7 @@ class AccountUI extends UIRegistrar
         }
 
         // Basic HTTP Clients
-        if (config('trax-account.stores.BasicClient.ajax')) {
+        if (config('trax-account.services.basic-clients')) {
 
             // Side menu
             $this->sideMenu['settings']['basic-clients'] = [
