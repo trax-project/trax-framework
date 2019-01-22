@@ -139,9 +139,7 @@ class TraxServiceProvider extends ServiceProvider
         $enabled = $this->hasConfig ? config($this->plugin.'.enabled') : true;
         if (!$enabled) return false;
         foreach ($this->dependencies as $plugin) {
-            if (!config($plugin.'.enabled')) {
-                if ($this->plugin = 'enac-custom') return false;
-            }
+            if (!config($plugin.'.enabled')) return false;
         }
         return true;
     }

@@ -12,7 +12,7 @@
             </trax-ui-input>
 
             <trax-ui-input type="email" icon="email" :placeholder="lang.trax_account.common.email"
-                v-model="form.email" v-bind:error="errors.email" :disabled="!internal">
+                v-model="form.email" v-bind:error="errors.email" :disabled="(selfEdit && !withUsername) || !internal">
             </trax-ui-input>
 
             <trax-ui-input type="text" icon="text_fields" :placeholder="lang.trax_account.common.firstname"

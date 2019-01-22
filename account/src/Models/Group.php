@@ -69,6 +69,7 @@ class Group extends GroupModel
      */
     public function registrations()
     {
+        if (!config('trax-training.enabled')) return $this;
         return $this->hasMany('Trax\Training\Models\GroupRegistration');
     }
 

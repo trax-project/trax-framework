@@ -43,7 +43,10 @@
 <script>
     export default {
     
-        props: ['selfEdit'],
+        props: {
+            selfEdit: null,
+            manageEntities: null,
+        },
         
         data: function() {
             return {
@@ -90,6 +93,7 @@
 
             this.bus.$on(that.id+'-data', function(data) {
                 that.selectData(data);
+                if (!that.manageEntities) return;
                 that.loadOrganizations();
                 if (that.form.organization_id) that.loadEntities();
                 else that.entities_loaded = true;

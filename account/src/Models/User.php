@@ -179,6 +179,7 @@ class User extends UserAuthenticatable implements MustVerifyEmail
      */
     public function learningUnitStates()
     {
+        if (!config('trax-dashboard.enabled')) return $this;
         return $this->hasMany('Trax\Dashboard\Models\LearningUnitUserState');
     }
 

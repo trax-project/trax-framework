@@ -71,6 +71,10 @@ trait UserGuard
             if ($request->has('username') && $user->username != $request->input('username')) {
                 throw new ForbiddenException();
             }
+        } else {
+            if ($request->has('email') && $user->email != $request->input('email')) {
+                throw new ForbiddenException();
+            }
         } 
     }
 

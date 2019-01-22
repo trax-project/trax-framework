@@ -26,7 +26,9 @@
         </trax-ui-card-icon-header>
 
         <trax-ui-card-icon-header icon="pan_tool" title="@lang('trax-account::common.rights')">
-            <trax-account-user-edit-rights self-edit="{{ $user->id == $data->user_id }}"></trax-account-user-edit-rights>
+            <trax-account-user-edit-rights self-edit="{{ $user->id == $data->user_id }}"
+                manage-entities="{{ config('trax-account.services.entities') }}">
+            </trax-account-user-edit-rights>
         </trax-ui-card-icon-header>
 
     </div>
