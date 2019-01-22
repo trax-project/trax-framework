@@ -33,7 +33,7 @@ trait UserValidation
             'current_password' => 'string|min:6',
 
             // Rights
-            'entity_type_code' => 'string|option:TraxAccount.EntityTypes',
+            'entity_type_code' => 'nullable|string|option:TraxAccount.EntityTypes',
             'organization_id' => 'nullable|integer|exists:' . traxConnection('trax-account', 'Entity') . '.trax_account_entities,id',
             'entity_id' => 'nullable|integer|exists:' . traxConnection('trax-account', 'Entity') . '.trax_account_entities,id',
             'rights_level_code' => 'string|option:TraxAccount.RightsLevels',
