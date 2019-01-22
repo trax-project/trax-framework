@@ -74,7 +74,7 @@ trait DataStorePostgreSql
     protected function normalizedDataPropRaw($name, $returnJson = false)
     {
         $names = explode('.', $name);
-        if (count($names) == 1) return '`' . $name . '`';
+        if (count($names) == 1) return '"' . $name . '"';
         $column = array_shift($names);
         $last = array_pop($names);
         $names = array_map(function($item) {
