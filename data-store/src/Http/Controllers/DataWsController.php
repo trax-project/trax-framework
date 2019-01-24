@@ -3,6 +3,7 @@
 namespace Trax\DataStore\Http\Controllers;
 
 use Illuminate\Http\Request;
+use DB;
 
 use Trax\DataStore\Http\Validations\DataValidation;
 use Trax\DataStore\Http\Guards\DataGuard;
@@ -45,9 +46,17 @@ class DataWsController extends DataStoreController
         $this->guardStoreRequest($request);
         $this->validateStoreRequest($request);
         $data = $this->validateStoreContent($request);
-        $res = $this->store->store($data, $this->options);
-        if (!is_string($res) && !is_numeric($res)) $this->finalizeData($res);
-        $this->hookDataStored($request, $data, $res);
+
+        // Start Transaction
+        $res = DB::transaction(function () use ($data, $request) {
+            $this->prepareData($data, $request);
+            $res = $this->store->store($data, $this->options);
+            if (!is_string($res) && !is_numeric($res)) $this->finalizeData($res);
+            $this->hookDataStored($request, $data, $res);
+            return $res;
+        });
+        // End of transaction
+
         return response()->json($res);
     }
     
@@ -61,9 +70,17 @@ class DataWsController extends DataStoreController
         $this->validateUpdateRequest($request, $id);
         $data = $this->validateUpdateContent($request, $id);
         $model = $this->store->find($id);
-        $res = $this->store->update($id, $data, $this->options);
-        if (!is_string($res) && !is_numeric($res)) $this->finalizeData($res);
-        $this->hookDataUpdated($request, $model, $data, $res);
+        
+        // Start Transaction
+        $res = DB::transaction(function () use ($data, $request, $model) {
+            $this->prepareData($data, $request, $model);
+            $res = $this->store->update($model->id, $data, $this->options);
+            if (!is_string($res) && !is_numeric($res)) $this->finalizeData($res);
+            $this->hookDataUpdated($request, $model, $data, $res);
+            return $res;
+        });
+        // End of transaction
+
         return response()->json($res);
     }
     
@@ -172,6 +189,13 @@ class DataWsController extends DataStoreController
     protected function withRelations($request, &$options)
     {
         if ($request->has('with')) $options['with'] = $request->input('with');
+    }
+
+    /**
+     * Prepare input data.
+     */
+    protected function prepareData(&$data, Request $request, $model = null)
+    {
     }
 
     /**
