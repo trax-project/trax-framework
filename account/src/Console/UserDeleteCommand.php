@@ -37,7 +37,12 @@ class UserDeleteCommand extends UserCommand
         if (!$this->confirm('Do you really want to delete this user?')) return;
         
         // Delete it
-        $this->store->delete($account->id);
+        try {
+            $this->store->delete($account->id);
+        } catch (\Exception $e) {
+            $this->line('Account deletion failed!');
+            return;
+        }
 
         // Display them
         $this->line('Deleted user: '.$this->argument('identifier'));

@@ -22,11 +22,18 @@ class ClientCreateCommand extends ClientCommand
     {
         $this->line('');
         
+        // Arguments
         $username = $this->argument('username');
         $password = $this->argument('password');
-
         if ($username != 'testsuite' && $password == 'password') $password = traxUuid();
         
+        // Delete existing account
+        try {
+            $account = $this->store->findBy('username', $username);
+            $this->store->delete($account->id);
+        } catch (\Exception $e) {
+        }
+
         // Create the account
         $account = [
             'username' => $username,
