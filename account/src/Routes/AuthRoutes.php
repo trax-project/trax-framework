@@ -21,7 +21,7 @@ class AuthRoutes
         if (traxRunningInLumen()) return;
 
         // No auth config
-        if (!config('trax-account.auth.enabled')) return;
+        if (!config('trax-account.auth.enabled') || !config('trax.ui.enabled')) return;
         
         
         // Configurable controllers

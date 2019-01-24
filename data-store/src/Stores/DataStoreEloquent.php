@@ -91,12 +91,7 @@ class DataStoreEloquent extends DataStoreDatabase
     public function find($id, $options = array())
     {
         $this->clearBuilder();
-        $model = $this->builder;
-
-        // With relations
-        $this->withRelations = isset($options['with']) ? $options['with'] : [];
-        $model = $this->withRelations($model);
-
+        $model = $this->withRelations($this->builder, $options);
         $model = $model->find($id);
         if (!$model)
             throw new NotFoundException('The requested record does not exist.');
@@ -159,8 +154,9 @@ class DataStoreEloquent extends DataStoreDatabase
     /**
      * Implement Eloquent 'with'.
      */
-    protected function withRelations($builder)
+    protected function withRelations($builder, $options)
     {
+        $this->withRelations = isset($options['with']) ? $options['with'] : [];
         $keys = array_keys($this->relations);
         $relations = array_intersect($this->withRelations, $keys);
         return $builder->with($relations);

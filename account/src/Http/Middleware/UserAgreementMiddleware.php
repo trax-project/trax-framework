@@ -12,6 +12,9 @@ class UserAgreementMiddleware
      */
     public function handle($request, $next, $guard = null) 
     {
+        // Agreements deactivated
+        if (!config('trax-account.services.agreements')) return $next($request);
+
         // Unauthenticated views
         if (!Auth::check()) return $next($request);
 

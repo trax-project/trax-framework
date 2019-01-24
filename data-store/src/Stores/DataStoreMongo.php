@@ -46,17 +46,13 @@ class DataStoreMongo extends DataStoreEloquent
     }
     
     /**
-     * Prepare a data before recording it: post-processing.
+     * Implement Eloquent 'with'.
      */
-    /*
-    Already overriden in EloquentStore, but still to be validated.
-    protected function recordInput($record, $model = null)
+    protected function withRelations($builder, $options)
     {
-        // Transform the associative array into object
-        $record['data'] = json_decode(json_encode($record['data']));
-        return $record;
+        $this->withRelations = isset($options['with']) ? $options['with'] : [];
+        return $builder;
     }
-    */ 
 
     /**
      * Prepare a data entry before returning it.

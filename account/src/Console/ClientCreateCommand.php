@@ -7,7 +7,7 @@ class ClientCreateCommand extends ClientCommand
     /**
      * The name and signature of the console command.
      */
-    protected $signature = 'client:create {name}';
+    protected $signature = 'client:create {username=testsuite} {password=password}';
 
     /**
      * The console command description.
@@ -22,32 +22,30 @@ class ClientCreateCommand extends ClientCommand
     {
         $this->line('');
         
+        $username = $this->argument('username');
+        $password = $this->argument('password');
+
+        if ($username != 'testsuite' && $password == 'password') $password = traxUuid();
+        
         // Create the account
-        $name = $this->argument('name');
-        if ($name == 'test') {
-
-            // Special account for tests
-            $account = array(
-                'name' => 'Test Suite',
-                'username' => 'testsuite',
-                'password' => 'password',
-            );
-        } else {
-
-            // Generated IDs account
-            $account = array(
-                'name' => $this->argument('name'),
-                'username' => traxUuid(),
-                'password' => traxUuid(),
-            );
+        $account = [
+            'username' => $username,
+            'password' => $password,
+        ];
+        try {
+            $this->store->store($account);
+        } catch (\Exception $e) {
+            $this->line('Account creation failed!');
+            return;
         }
-
-        $account = $this->store->store($account, ['format'=>'object']);
         
         // Display it
-        $this->line('Created client: '.$account->data->name);
-        $this->line('Username: '.$account->username);
-        $this->line('Password: '.$account->password);
+        $this->line('');
+        $headers = ['Username', 'Password'];
+        $this->table($headers, [[
+            $username,
+            $password,
+        ]]);
     }
 
 }

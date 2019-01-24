@@ -62,7 +62,7 @@ class ViewsController extends Controller
         if (config('trax-notification.ui.enabled')) $data->notifications = $this->notificationsData();
 
         // Prepare nav
-        $userData = Auth::user()->data;
+        $userData = Auth::user()->jsonData();
         $this->nav->minisidebar = isset($userData->preferences) && isset($userData->preferences->minisidebar) && $userData->preferences->minisidebar;
         
         // View with merge data

@@ -25,9 +25,6 @@ class UIServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        // UI disabled
-        if (!config('trax.ui.enabled')) return;
-
         // Expose UI Services
         $this->app->singleton('Trax\UI\UIServices', function ($app) {
             return new UIServices($app);

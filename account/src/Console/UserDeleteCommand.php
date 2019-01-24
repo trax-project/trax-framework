@@ -7,7 +7,7 @@ class UserDeleteCommand extends UserCommand
     /**
      * The name and signature of the console command.
      */
-    protected $signature = 'user:delete {email}';
+    protected $signature = 'user:delete {identifier}';
 
     /**
      * The console command description.
@@ -24,7 +24,11 @@ class UserDeleteCommand extends UserCommand
 
         // Get the account
         try {
-            $account = $this->store->findBy('email', $this->argument('email'));
+            if (config('trax-account.auth.username')) {
+                $account = $this->store->findBy('username', $this->argument('identifier'));
+            } else {
+                $account = $this->store->findBy('email', $this->argument('identifier'));
+            }
         } catch (\Exception $e) {
             return $this->error("The specified user does not exist.");
         }
@@ -36,7 +40,7 @@ class UserDeleteCommand extends UserCommand
         $this->store->delete($account->id);
 
         // Display them
-        $this->line('Deleted user: '.$this->argument('email'));
+        $this->line('Deleted user: '.$this->argument('identifier'));
     }
 
 }

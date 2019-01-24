@@ -56,7 +56,7 @@ class DailyDigest extends NativeNotification
                 'notifications' => $this->notifications,
             ])
             ->subject(__('trax-notification::common.daily_digest_title'))
-            ->greeting(__('trax-notification::common.dear') . ' ' . $notifiable->data->firstname . ',')
+            ->greeting(__('trax-notification::common.dear') . ' ' . $notifiable->jsonData()->firstname . ',')
             ->line(__('trax-notification::common.daily_digest_pre', ['count' => $this->notifications->count()]))
             ->action(__('trax-account::common.login'), url(route('login')))
             ->line(__('trax-notification::common.daily_digest_post', ['count' => $this->notifications->count()]))

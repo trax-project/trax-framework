@@ -7,13 +7,6 @@ traxCreateModelSwitchClass('Trax\Account\Models', 'trax-account', 'BasicClient')
 class BasicClient extends BasicClientModel
 {
     /**
-     * The attributes that should be cast to native types.
-     */
-    protected $casts = [
-        'data' => 'object',
-    ];
-
-    /**
      * The table associated with the model.
      */
     protected $table = 'trax_account_basic_clients';

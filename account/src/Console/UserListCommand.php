@@ -25,14 +25,14 @@ class UserListCommand extends UserCommand
         // Get the accounts
         $accounts = $this->store->get()->map(function ($account) {
             return array(
-                $account->email,
+                config('trax-account.auth.username') ? $account->username : $account->email,
                 $account->data->firstname,
                 $account->data->lastname,
             );
         });
 
         // Display them
-        $headers = ['Email', 'Firstname', 'Lastname'];
+        $headers = ['Identifier', 'Firstname', 'Lastname'];
         $this->table($headers, $accounts);
     }
 

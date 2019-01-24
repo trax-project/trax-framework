@@ -29,6 +29,7 @@ class LocaleMiddleware
             // Get current language from session coockie
             $lang = session('lang', config('app.locale'));
         }
+
         App::setLocale($lang);
 
         // Fine, we continue

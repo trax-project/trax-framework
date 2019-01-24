@@ -6,14 +6,6 @@ traxCreateModelSwitchClass('Trax\Account\Models', 'trax-account', 'Agreement');
 
 class Agreement extends AgreementModel
 {
-
-    /**
-     * The attributes that should be cast to native types.
-     */
-    protected $casts = [
-        'data' => 'object',
-    ];
-
     /**
      * The table associated with the model.
      */

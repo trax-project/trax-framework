@@ -3,7 +3,6 @@
 namespace Trax\Account\Models;
 
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Auth;
 
 use Trax\Account\Notifications\ResetPassword as ResetPasswordNotification;
@@ -13,16 +12,9 @@ use Trax\Account\Notifications\Invitation as InvitationNotification;
 
 traxCreateAuthenticatableSwitchClass('Trax\Account\Models', 'trax-account', 'User');
 
-class User extends UserAuthenticatable implements MustVerifyEmail
+class User extends UserAuthenticatable
 {
     use Notifiable;
-
-    /**
-     * The attributes that should be cast to native types.
-     */
-    protected $casts = [
-        'data' => 'object',
-    ];
 
     /**
      * The table associated with the model.
@@ -46,6 +38,7 @@ class User extends UserAuthenticatable implements MustVerifyEmail
         'role', 'organization', 'entity',
         'data', 'created_at', 'updated_at'
     ];
+
 
     /**
      * Send the password reset notification.
@@ -77,7 +70,7 @@ class User extends UserAuthenticatable implements MustVerifyEmail
      */
     public function setPicture($url)
     {
-        $data = $this->data;
+        $data = $this->jsonData();;
         $data->picture = $url;
         $this->data = $data;
         $this->save();
@@ -88,7 +81,7 @@ class User extends UserAuthenticatable implements MustVerifyEmail
      */
     public function setPreferences($preferences)
     {
-        $data = $this->data;
+        $data = $this->jsonData();
         if (!isset($data->preferences)) $data->preferences = (object)[];
         foreach ($preferences as $prop => $val) {
             $data->preferences->$prop = $val;
@@ -102,7 +95,7 @@ class User extends UserAuthenticatable implements MustVerifyEmail
      */
     public function setStatus($name)
     {
-        $data = $this->data;
+        $data = $this->jsonData();
         if (!isset($data->status)) $data->status = (object)[];
         $data->status->$name = traxNowString();
         $this->data = $data;
@@ -114,8 +107,9 @@ class User extends UserAuthenticatable implements MustVerifyEmail
      */
     public function getStatus($name)
     {
-        if (!isset($this->data->status) || !isset($this->data->status->$name)) return false;
-        return $this->data->status->$name;
+        $data = $this->jsonData();
+        if (!isset($data->status) || !isset($data->status->$name)) return false;
+        return $data->status->$name;
     }
 
     /**
@@ -123,7 +117,8 @@ class User extends UserAuthenticatable implements MustVerifyEmail
      */
     public function getLangAttribute($value)
     {
-        return isset($this->data->lang) ? $this->data->lang : config('app.locale');
+        $data = $this->jsonData();
+        return isset($data->lang) ? $data->lang : config('app.locale');
     }
 
     /**
@@ -131,7 +126,17 @@ class User extends UserAuthenticatable implements MustVerifyEmail
      */
     public function getFullnameAttribute($value)
     {
-        return $this->data->lastname . ' ' . $this->data->firstname;
+        $data = $this->jsonData();
+        return $data->lastname . ' ' . $data->firstname;
+    }
+
+    /**
+     * Get JSON Data.
+     */
+    public function jsonData()
+    {
+        if (!is_array($this->data)) return $this->data;
+        return json_decode(json_encode($this->data));
     }
 
     /**
@@ -188,8 +193,9 @@ class User extends UserAuthenticatable implements MustVerifyEmail
      */
     public function collaborators()
     {
+        $data = $this->jsonData();
         if (isset($this->entity_id) && $this->entity_id
-            && isset($this->data->rights_level_code) && $this->data->rights_level_code == 'entity') {
+            && isset($data->rights_level_code) && $data->rights_level_code == 'entity') {
     
             // Entity level
             $entityIds = [$this->entity_id];
@@ -236,15 +242,17 @@ class User extends UserAuthenticatable implements MustVerifyEmail
      */
     public function entityIds($globalLevelAllowed = false, $onlyChildren = false)
     {
+        $data = $this->jsonData();
+
         // Entity level
         if (isset($this->entity_id) && $this->entity_id
-            && isset($this->data->rights_level_code) && $this->data->rights_level_code == 'entity') {
+            && isset($data->rights_level_code) && $data->rights_level_code == 'entity') {
 
             return $onlyChildren ? [$this->entity_id] : [$this->organization_id, $this->entity_id];
         }
 
         // Organization level
-        if (isset($this->organization_id) && $this->organization_id && ((isset($this->data->rights_level_code) && $this->data->rights_level_code == 'organization')
+        if (isset($this->organization_id) && $this->organization_id && ((isset($data->rights_level_code) && $data->rights_level_code == 'organization')
             || !$globalLevelAllowed)) {
 
             $ids = $this->organization->children()->pluck('id')->toArray();
@@ -262,15 +270,17 @@ class User extends UserAuthenticatable implements MustVerifyEmail
      */
     public function entityUuids($globalLevelAllowed = false, $onlyChildren = false)
     {
+        $data = $this->jsonData();
+
         // Entity level
         if (isset($this->entity_id) && $this->entity_id
-            && isset($this->data->rights_level_code) && $this->data->rights_level_code == 'entity') {
+            && isset($data->rights_level_code) && $data->rights_level_code == 'entity') {
 
             return $onlyChildren ? [$this->entity->uuid] : [$this->organization->uuid, $this->entity->uuid];
         }
 
         // Organization level
-        if (isset($this->organization_id) && $this->organization_id && ((isset($this->data->rights_level_code) && $this->data->rights_level_code == 'organization')
+        if (isset($this->organization_id) && $this->organization_id && ((isset($data->rights_level_code) && $data->rights_level_code == 'organization')
             || !$globalLevelAllowed)) {
 
             $ids = $this->organization->children()->pluck('uuid')->toArray();

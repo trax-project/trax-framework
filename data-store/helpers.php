@@ -95,13 +95,14 @@ if (! function_exists('traxCreateModelSwitchClass')) {
         $code = "namespace ".$namespace."; ";
         $driver = config($plugin . '.stores.'.$className.'.driver');
         if ($driver == 'mongo') {
-            $code .= "class " . $className . "Model extends \Jenssegers\Mongodb\Eloquent\Model {
+            $code .= "class " . $className . 'Model extends \Jenssegers\Mongodb\Eloquent\Model {
                 use \Trax\DataStore\Models\TraxModel;
-            }";
+            }';
         } else {
-            $code .= "class " . $className . "Model extends \Illuminate\Database\Eloquent\Model {
+            $code .= "class " . $className . 'Model extends \Illuminate\Database\Eloquent\Model {
                 use \Trax\DataStore\Models\TraxModel;
-            }";
+                protected $casts = ["data" => "object"];
+            }';
         }
         eval($code);
     }
@@ -116,11 +117,17 @@ if (! function_exists('traxCreateAuthenticatableSwitchClass')) {
         $code = "namespace ".$namespace."; ";
         $driver = config($plugin.'.stores.'.$className.'.driver');
         if ($driver == 'mongo') {
-            $code .= "class ".$className."Authenticatable extends \Jenssegers\Mongodb\Auth\User {}";
+            $code .= "class ".$className.'Authenticatable extends \Jenssegers\Mongodb\Auth\User {
+                
+            }';
         } else if (config('trax-account.files.enabled')) {
-            $code .= "class " . $className . "Authenticatable extends \Trax\Account\Models\UserWithFiles {}";
+            $code .= "class " . $className . 'Authenticatable extends \Trax\Account\Models\UserWithFiles {
+                protected $casts = ["data" => "object"];
+            }';
         } else {
-            $code .= "class ".$className."Authenticatable extends \Illuminate\Foundation\Auth\User {}";
+            $code .= "class ".$className. 'Authenticatable extends \Illuminate\Foundation\Auth\User {
+                protected $casts = ["data" => "object"];
+            }';
         }
         eval($code);
     }

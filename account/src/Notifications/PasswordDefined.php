@@ -36,7 +36,7 @@ class PasswordDefined extends Notification
         return (new MailMessage)
             ->template('trax-notification::mail.template')
             ->subject(__('trax-account::common.password_defined'))
-            ->greeting(__('trax-notification::common.dear') . ' ' . $notifiable->data->firstname . ',')
+            ->greeting(__('trax-notification::common.dear') . ' ' . $notifiable->jsonData()->firstname . ',')
             ->line($loginMessage)
             ->action(__('trax-account::common.login'), url(route('login')))
             ->line(__('trax-account::notifications.password_defined_post'));

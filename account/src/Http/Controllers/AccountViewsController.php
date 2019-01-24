@@ -193,9 +193,11 @@ class AccountViewsController extends ViewsController
             'entity_types_select' => $this->account->entityTypes()->select(),
             'rights_levels_select' => $this->account->rightsLevels()->select(),
             'user_functions_select' => $this->account->userFunctions()->select(),
-            'roles_select' => $this->account->roles()->select(),
             'notifications_default' => config('trax-notification.default'),
         ];
+        if (config('trax-account.services.roles')) {
+            $res['roles_select'] = $this->account->roles()->select();
+        }
         if (isset($id)) {
             $res['user_id'] = $id;
         }

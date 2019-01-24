@@ -189,8 +189,7 @@ class DataStoreDatabase implements DataStoreInterface
         if (isset($args['offset'])) $paginated = $paginated->offset($args['offset']);
 
         // With relations
-        $this->withRelations = isset($options['with']) ? $options['with'] : [];
-        $paginated = $this->withRelations($paginated);
+        $paginated = $this->withRelations($paginated, $options);
 
         // It time to get them
         $result = $paginated->get();
@@ -280,12 +279,7 @@ class DataStoreDatabase implements DataStoreInterface
     public function find($id, $options = array())
     {
         $this->clearBuilder();
-        $model = $this->builder;
-
-        // With relations
-        $this->withRelations = isset($options['with']) ? $options['with'] : [];
-        $model = $this->withRelations($model);
-
+        $model = $this->withRelations($this->builder, $options);
         $model = $model->where('id', $id)->first();
         if (!$model)
             throw new NotFoundException('The requested record does not exist.');
@@ -298,12 +292,7 @@ class DataStoreDatabase implements DataStoreInterface
     public function findBy($field, $value, $options = array())
     {
         $this->clearBuilder();
-        $model = $this->builder;
-
-        // With relations
-        $this->withRelations = isset($options['with']) ? $options['with'] : [];
-        $model = $this->withRelations($model);
-
+        $model = $this->withRelations($this->builder, $options);
         $model = $this->searchTermIn($model, $field, $value, true)->first();
         if (!$model)
             throw new NotFoundException('The requested record does not exist.');
@@ -600,8 +589,9 @@ class DataStoreDatabase implements DataStoreInterface
     /**
      * Implement Eloquent 'with'.
      */
-    protected function withRelations($builder)
+    protected function withRelations($builder, $options)
     {
+        $this->withRelations = isset($options['with']) ? $options['with'] : [];
         return $builder;
     }
 

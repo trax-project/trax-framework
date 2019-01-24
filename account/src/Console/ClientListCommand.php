@@ -25,14 +25,13 @@ class ClientListCommand extends ClientCommand
         // Get the accounts
         $accounts = $this->store->get()->map(function ($account) {
             return array(
-                $account->data->name,
                 $account->username,
                 $account->password,
             );
         });
 
         // Display them
-        $headers = ['Name', 'Username', 'Password'];
+        $headers = ['Username', 'Password'];
         $this->table($headers, $accounts);
     }
 

@@ -63,8 +63,12 @@ class DailyDigestCommand extends Command
             ]]);
 
             // Send notification
-            (new DailyDigest($user, $notifications))->sendEmail();
-            $this->line('Digest sent to ' . $user->fullname . ' (' . count($userNotificationIds) . ' notifications)');
+            try {
+                (new DailyDigest($user, $notifications))->sendEmail();
+                $this->line('Digest sent to ' . $user->fullname . ' (' . count($userNotificationIds) . ' notifications)');
+            } catch(\Exception $e) {
+                $this->line('Failed to send digest to ' . $user->fullname);
+            }
         }
     }
 

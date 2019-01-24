@@ -25,7 +25,7 @@ class Invitation extends ResetPasswordLaravel
         return (new MailMessage)
             ->template('trax-notification::mail.template')
             ->subject(__('trax-account::common.invitation'))
-            ->greeting(__('trax-notification::common.dear') . ' ' . $notifiable->data->firstname . ',')
+            ->greeting(__('trax-notification::common.dear') . ' ' . $notifiable->jsonData()->firstname . ',')
             ->line(__('trax-account::notifications.invitation_pre'))
             ->action(__('trax-account::common.login'), url(config('app.url') . route('password.reset', $this->token, false)))
             ->line(__('trax-account::notifications.invitation_post'));

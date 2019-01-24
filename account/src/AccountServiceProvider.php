@@ -47,16 +47,16 @@ class AccountServiceProvider extends DataStoreServiceProvider
      * The service provider commands.
      */
     protected $commands = [
+
+        // Users
         'Trax\Account\Console\UserAdminCreateCommand',
-        /*
         'Trax\Account\Console\UserListCommand',
-        'Trax\Account\Console\UserCreateCommand',
         'Trax\Account\Console\UserDeleteCommand',
-        'Trax\Account\Console\UserResetCommand',
+
+        // BasicClients
         'Trax\Account\Console\ClientListCommand',
         'Trax\Account\Console\ClientCreateCommand',
         'Trax\Account\Console\ClientDeleteCommand',
-        */
     ];
     
     /**

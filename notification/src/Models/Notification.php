@@ -8,13 +8,6 @@ class Notification extends NotificationModel
 {
     
     /**
-     * The attributes that should be cast to native types.
-     */
-    protected $casts = [
-        'data' => 'object',
-    ];
-
-    /**
      * The table associated with the model.
      */
     protected $table = 'trax_notification';
