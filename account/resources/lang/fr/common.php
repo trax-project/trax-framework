@@ -31,6 +31,7 @@ return [
         Il semble que vous ne soyez pas autorisé à réinitialiser votre mot de passe.
         Veuillez contacter l'administrateur de la plateforme.
     ",
+    'reset_password_error' => "Il y a un problème. Veuillez vérifier que vous avez entré la bonne adresse email.",
     'invitation' => "Invitation",
     'invitation_email' => "Email d'invitation",
     'confirm_invitation_email_q' => "

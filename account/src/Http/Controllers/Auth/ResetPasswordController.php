@@ -2,6 +2,8 @@
 
 namespace Trax\Account\Http\Controllers\Auth;
 
+use Illuminate\Http\Request;
+
 use App\Http\Controllers\Auth\ResetPasswordController as NativeResetPasswordController;
 
 class ResetPasswordController extends NativeResetPasswordController
@@ -22,5 +24,12 @@ class ResetPasswordController extends NativeResetPasswordController
         }
     }
 
+    /**
+     * Get the response for a failed password reset.
+     */
+    protected function sendResetFailedResponse(Request $request, $response)
+    {
+        return response(__('trax-account::common.reset_password_error'), 401);
+    }
 
 }

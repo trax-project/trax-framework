@@ -26,6 +26,7 @@ return [
     'remember_me' => 'Remember me',
     'sent_password_email_success' => 'Please, check your emails. A reset link has been sent.',
     'sent_password_email_error' => 'You are not allowed to reset your password. Please, contact the administrator.',
+    'reset_password_error' => 'Something goes wrong. Please, check that you entered the correct email.',
     'invitation' => 'Invitation',
     'invitation_email' => 'Invitation e-Mail',
     'confirm_invitation_email_q' => '

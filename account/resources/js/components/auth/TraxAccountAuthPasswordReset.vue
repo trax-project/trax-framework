@@ -1,7 +1,8 @@
 <template>
 
     <trax-ui-ajax-form id="trax-account-auth-password-reset" :endpoint="endpoint" :form="form" 
-        :action="action" :bus="bus" icons="1" toastr-disabled="1" :color="color">
+        :action="action" :bus="bus" icons="1" :color="color" toastr-passed-label="1" 
+        toastr-form-error-disabled="1" toastr-form-success-disabled="1">
 
         <trax-ui-input type="email" icon="email" :placeholder="lang.trax_account.common.email"
             v-model="form.email" v-bind:error="errors.email" required="1">

@@ -30,6 +30,8 @@
             toastrOptions: null,
             toastrLabels: null,
             toastrPassedLabel: null,
+            toastrFormErrorDisabled: null,
+            toastrFormSuccessDisabled: null,
             bus: null
         },
     
@@ -68,8 +70,6 @@
                         that.mapData(response.data);
                         that.loaded = true;
                     })
-                    .catch(function (error) {
-                    });
             },
             
             putData(id, data) {
@@ -77,12 +77,16 @@
                 axios.put(this.endpoint+'/'+id, data)
                     .then(function (response) {
                         that.bus.$emit(that.id+'-updated', {data: data, response: response});
-                        that.bus.$emit(that.id+'-toastr-success', response.data);
+                        if (!that.toastrFormSuccessDisabled) {
+                            that.bus.$emit(that.id+'-toastr-success', response.data);
+                        }
                     })
                     .catch(function (error) {
                         if (error.response.data.errors) {
                             that.processErrors(error.response.data.errors);
-                            that.bus.$emit(that.id+'-toastr-error', that.lang.trax_ui.form.form_error);
+                            if (!that.toastrFormErrorDisabled) {
+                                that.bus.$emit(that.id+'-toastr-error', that.lang.trax_ui.form.form_error);
+                            }
                         } else {
                             that.bus.$emit(that.id+'-toastr-error', error.response.data);
                         }
@@ -94,12 +98,16 @@
                 axios.post(this.endpoint, data)
                     .then(function (response) {
                         that.bus.$emit(that.id+'-created', {data: data, response: response});
-                        that.bus.$emit(that.id+'-toastr-success', response.data);
+                        if (!that.toastrFormSuccessDisabled) {
+                            that.bus.$emit(that.id+'-toastr-success', response.data);
+                        }
                     })
                     .catch(function (error) {
                         if (error.response.data.errors) {
                             that.processErrors(error.response.data.errors);
-                            that.bus.$emit(that.id+'-toastr-error', that.lang.trax_ui.form.form_error);
+                            if (!that.toastrFormErrorDisabled) {
+                                that.bus.$emit(that.id+'-toastr-error', that.lang.trax_ui.form.form_error);
+                            }
                         } else {
                             that.bus.$emit(that.id+'-toastr-error', error.response.data);
                         }

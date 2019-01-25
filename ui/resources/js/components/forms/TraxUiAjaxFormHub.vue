@@ -19,6 +19,7 @@
             toastrOptions: null,
             toastrLabels: null,
             toastrPassedLabel: null,
+            toastrFormErrorDisabled: null,
             bus: null
         },
 
@@ -62,7 +63,9 @@
                     .catch(function (error) {
                         if (error.response.data.errors) {
                             that.processErrors(error.response.data.errors);
-                            that.bus.$emit(that.id+'-toastr-error', that.lang.trax_ui.form.form_error);
+                            if (!that.toastrFormErrorDisabled) {
+                                that.bus.$emit(that.id+'-toastr-error', that.lang.trax_ui.form.form_error);
+                            }
                         } else {
                             that.bus.$emit(that.id+'-toastr-error', error.response.data);
                         }
