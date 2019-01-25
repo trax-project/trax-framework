@@ -121,6 +121,10 @@
                 that.$emit('input', value);
             });
 
+            $('#'+this.id).on('dp.show', function (e) {
+                $(e.target).data("DateTimePicker").viewMode(that.viewMode); 
+            });
+
             $('body').bootstrapMaterialDesign({autofill: false});
 
             var icons = {
