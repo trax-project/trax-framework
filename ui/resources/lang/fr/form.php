@@ -26,6 +26,7 @@ return [
     'cancel' => 'Annuler',
     'close' => 'Fermer',
     'edit' => 'Modifier',
+    'delete' => 'Supprimer',
     'save' => 'Enregistrer',
     'submit' => 'Soumettre',
     'add_file' => 'Ajouter un fichier',
