@@ -74,6 +74,11 @@ class UIServices
      */
     protected $backgrounds;
 
+    /**
+     * Icons.
+     */
+    protected $icons;
+
 
     /**
      * Create a new data manager instance.
@@ -87,6 +92,9 @@ class UIServices
 
         $backgroundsClass = config('trax.options.backgrounds.model');
         $this->backgrounds = new $backgroundsClass();
+
+        $iconsClass = config('trax.options.icons.model');
+        $this->icons = new $iconsClass();
     }
 
     /**
@@ -103,6 +111,14 @@ class UIServices
     public function backgrounds()
     {
         return $this->backgrounds;
+    }
+
+    /**
+     * Return icons.
+     */
+    public function icons()
+    {
+        return $this->icons;
     }
 
     /**

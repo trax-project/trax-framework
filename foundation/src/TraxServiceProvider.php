@@ -123,11 +123,6 @@ class TraxServiceProvider extends ServiceProvider
         $this->registerUI();
         $this->registerPermissions();
         $this->registerEvents();
-
-        // For this plugin only
-        if ($this->plugin == 'trax-foundation') {
-            $this->loadTranslationsFrom($this->dir . '/../resources/lang', $this->plugin);
-        }
     }
 
     /**
@@ -212,7 +207,7 @@ class TraxServiceProvider extends ServiceProvider
     {
         if ($this->hasMigrations && $this->app->runningInConsole()) {
             $this->loadMigrationsFrom($this->dir.'/../database/migrations');
-        } 
+        }
     }
     
     /**
@@ -271,7 +266,15 @@ class TraxServiceProvider extends ServiceProvider
      */
     protected function registerUI()
     {
-        if (!$this->hasUI || !config('trax.ui.enabled')) return;
+        if (!config('trax.ui.enabled')) return;
+
+        // Foundation only
+        if ($this->plugin == 'trax-foundation') {
+            $this->loadTranslationsFrom($this->dir . '/../resources/lang', $this->plugin);
+            return;
+        }
+
+        if (!$this->hasUI) return;
 
         // UI routes
         $this->loadRoutesFrom($this->dir . '/../routes/web.php');     
