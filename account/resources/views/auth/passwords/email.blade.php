@@ -6,7 +6,7 @@
 
 @section('page')
 
-<div class="col-lg-5 col-md-8 col-sm-10 ml-auto mr-auto">
+<div class="col-lg-5 col-md-8 col-sm-10 ml-auto mr-auto trax-no-required">
 
     <trax-ui-card-plain-header title="@lang('trax-account::common.forgot_password_q')" header-color="{{ config('trax.ui.colors.auth') }}">
         <trax-account-auth-password-email email="{{ old('email') }}" color="{{ config('trax.ui.colors.auth') }}"></trax-account-auth-password-email>

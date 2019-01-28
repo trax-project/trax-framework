@@ -5,6 +5,7 @@
             <div class="input-group-prepend">
                 <span class="input-group-text">
                     <i class="material-icons">{{ icon }}</i>
+                    <span class="trax-required" v-if="required">*</span>
                 </span>
             </div>
             <textarea class="form-control" v-if="rows"
@@ -34,6 +35,7 @@
         <div class="row" v-else-if="col">
             <label :class="labelClass" style="padding-top:1.7rem;">
                 {{ placeholder }}
+                <span class="trax-required" v-if="required">*</span>
             </label>
             <div :class="formColClass">
                 <textarea class="form-control" v-if="rows" 

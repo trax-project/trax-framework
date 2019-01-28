@@ -6,6 +6,7 @@
             <div class="input-group-prepend">
                 <span class="input-group-text">
                     <i class="material-icons">{{ icon }}</i>
+                    <span class="trax-required" v-if="required">*</span>
                 </span>
             </div>
             <div :class="choiceClass" :id="internal_id">
@@ -26,6 +27,7 @@
         <div class="row" v-else-if="col">
             <label :class="labelColClass" style="padding-top:1.7rem;">
                 {{ placeholder }}
+                <span class="trax-required" v-if="required">*</span>
             </label>
             <div :class="formColClass">
                 <div :class="choiceClass" :id="internal_id">
@@ -77,6 +79,7 @@
             options: null,
             value: null,
             disabled: null,
+            required: null,
             placeholder: null,
             size: {default: 'lg'},
             plainIcons: null,

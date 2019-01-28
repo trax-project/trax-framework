@@ -5,6 +5,7 @@
             <div class="input-group-prepend">
                 <span class="input-group-text">
                     <i class="material-icons">{{ icon }}</i>
+                    <span class="trax-required" v-if="required">*</span>
                 </span>
             </div>
             <input :id="id" :class="type+'picker form-control'"
@@ -18,6 +19,7 @@
         <div class="row" v-else-if="col">
             <label :class="labelClass" style="padding-top:1.7rem;">
                 {{ placeholder }}
+                <span class="trax-required" v-if="required">*</span>
             </label>
             <div :class="formColClass">
                 <input :id="id" :class="type+'picker form-control'"

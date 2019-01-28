@@ -4,6 +4,7 @@
         <div class="input-group-prepend">
             <span class="input-group-text">
                 <i class="material-icons">{{ icon }}</i>
+                <span class="trax-required" v-if="required">*</span>
             </span>
         </div>
         <span style="white-space:pre-wrap;" v-html="value"></span>
@@ -12,6 +13,7 @@
     <div class="row pt-2 pb-3" v-else-if="col">
         <label :class="labelClass" style="padding-top:2px;">
             {{ placeholder }}
+            <span class="trax-required" v-if="required">*</span>
         </label>
         <div :class="formColClass" style="white-space:pre-wrap;" v-html="value">
         </div>
@@ -26,7 +28,7 @@
 <script>
     export default {
 
-        props: ['icon', 'col', 'placeholder', 'value'],
+        props: ['icon', 'col', 'placeholder', 'value', 'required'],
 
         data() {
             return {

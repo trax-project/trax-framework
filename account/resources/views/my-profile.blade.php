@@ -17,7 +17,7 @@
         </trax-ui-card-icon-header>
 
     </div>
-    <div class="col-lg-6">
+    <div class="col-lg-6 trax-no-required">
 
         <trax-ui-card-icon-header class="mb-5" icon="lock_outline" title="@lang('trax-account::common.access')">
             <trax-account-user-edit-password></trax-account-user-edit-password>
