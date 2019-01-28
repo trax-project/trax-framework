@@ -29,6 +29,7 @@
                     :value="value"
                     @input="$emit('input', $event.target.value)"
             >
+            <span class="bmd-help" style="margin-top:55px;margin-left:55px;" v-if="help"> {{ help }} </span>
         </div>
         <div class="row" v-else-if="col">
             <label :class="labelClass" style="padding-top:1.7rem;">
@@ -56,6 +57,7 @@
                     :value="value"
                     @input="$emit('input', $event.target.value)"
                 >
+                <span class="bmd-help" v-if="help"> {{ help }} </span>
                 <span class="trax-form-error" v-if="error"> {{ error }} </span>
             </div>
         </div>
@@ -83,6 +85,7 @@
                     :value="value"
                     @input="$emit('input', $event.target.value)"
             >
+            <span class="bmd-help" v-if="help"> {{ help }} </span>
             <span class="trax-form-error" v-if="error"> {{ error }} </span>
         </div>
         <span class="trax-form-error" v-if="error && icon"> {{ error }} </span>
@@ -93,7 +96,7 @@
 <script>
     export default {
 
-        props: ['type', 'step', 'icon', 'col', 'placeholder', 'rows', 'value', 'error', 'maxlength', 'required', 'disabled', 'autofocus'],
+        props: ['type', 'step', 'icon', 'col', 'placeholder', 'rows', 'value', 'error', 'help', 'maxlength', 'required', 'disabled', 'autofocus'],
 
         data() {
             return {
