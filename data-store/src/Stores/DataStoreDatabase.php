@@ -451,13 +451,14 @@ class DataStoreDatabase implements DataStoreInterface
      * Used with SQL raw request.
      * data.a.b  >  data->"$.a.b"
      */
-    protected function normalizedDataPropRaw($name)
+    protected function normalizedDataPropRaw($name, $prefix = null)
     {
         $names = explode('.', $name);
         if (count($names) == 1) return '`' . $name . '`';
         $column = array_shift($names);
         $name = implode('.', $names);
         $prop = $column.'->"$.'.$name.'"';
+        if (isset($prefix)) $prop = $prefix .'.'. $prop;
         return $prop;
     }
 
@@ -698,7 +699,7 @@ class DataStoreDatabase implements DataStoreInterface
             $table = $this->relations[$column]['table'];
             $this->select = [$this->table . '.*'];
             $builder = $builder->join($table, $table . '.id', '=', $this->table . '.' . $column . '_id');
-            $builder = $builder->orderByRaw($table . '.' . $this->normalizedDataPropRaw($by) . ' ' . $dir);
+            $builder = $builder->orderByRaw($this->normalizedDataPropRaw($by, $table) . ' ' . $dir);
             return $builder;
 
         } else {

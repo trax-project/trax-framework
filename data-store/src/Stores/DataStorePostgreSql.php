@@ -71,7 +71,7 @@ trait DataStorePostgreSql
      * Used with LIKE & =
      * data.a.b  >  'data' -> 'a' ->> 'b'
      */
-    protected function normalizedDataPropRaw($name, $returnJson = false)
+    protected function normalizedDataPropRaw($name, $prefix = null)
     {
         $names = explode('.', $name);
         if (count($names) == 1) return '"' . $name . '"';
@@ -81,7 +81,7 @@ trait DataStorePostgreSql
             return "'".$item."'";
         }, $names);
         $name = implode(' -> ', $names);
-        $lastOp = $returnJson ? '->' : '->>';
+        $lastOp = '->>';
         $name .= " ".$lastOp." '".$last."'"; 
         if (count($names) > 0) $name = " -> ".$name;
         $prop = '"'.$column.'"'.$name;
