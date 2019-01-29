@@ -686,15 +686,25 @@ class DataStoreDatabase implements DataStoreInterface
     {
         $byArray = explode('.', $by);
         $column = array_shift($byArray);
-        if (isset($this->relations[$column])) {
+        if (!isset($this->relations[$column])) {
+
+            // Standard order by 
+            return $builder->orderByRaw($this->normalizedDataPropRaw($by) . ' ' . $dir);
+
+        } else if ($this->relations[$column]['type'] == 'single') {
+
+            // Order by a "belongsTo" relation
             $by = implode('.', $byArray);
             $table = $this->relations[$column]['table'];
             $this->select = [$this->table . '.*'];
-            $builder = $builder->join($table, $table . '.id', '=', $this->table.'.'.$column.'_id');
-            $builder = $builder->orderByRaw($table . '.'. $this->normalizedDataPropRaw($by) . ' ' . $dir);
+            $builder = $builder->join($table, $table . '.id', '=', $this->table . '.' . $column . '_id');
+            $builder = $builder->orderByRaw($table . '.' . $this->normalizedDataPropRaw($by) . ' ' . $dir);
             return $builder;
+
         } else {
-            return $builder->orderByRaw($this->normalizedDataPropRaw($by) . ' ' . $dir);
+
+            // Order by a "hasMany" relation: not supported
+            return $builder;
         }
     }
 

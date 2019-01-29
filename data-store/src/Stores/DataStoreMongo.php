@@ -98,7 +98,15 @@ class DataStoreMongo extends DataStoreEloquent
      */
     protected function orderBy($builder, $by, $dir)
     {
-        return $builder->orderBy($this->normalizedDataProp($by), $dir);
+        $byArray = explode('.', $by);
+        $column = array_shift($byArray);
+        if (!isset($this->relations[$column])) {
+            // Standard ordering
+            return $builder->orderBy($this->normalizedDataProp($by), $dir);
+        } else {
+            // Order by relations: not supported
+            return $builder;
+        }
     }
 
     /**
