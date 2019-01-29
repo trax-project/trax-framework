@@ -20,6 +20,8 @@
             headerColor: { default: 'primary' },
             editUrl: null,
             editUrlMap: null,
+            orderColumn: null,
+            orderDir: null,
             bus: null
         },
 
@@ -41,6 +43,10 @@
         },
 
         computed: {
+
+            order: function() {
+                return this.orderColumn && this.orderDir ? [[this.orderColumn, this.orderDir]] : [];
+            },
 
             params: function () {
                 return this.endpointParams ? this.endpointParams : {};
@@ -91,6 +97,7 @@
                     },
                     columns: settings.columns,
                     ordering: settings.ordering,
+                    order: that.order,
                     language: lang.trax_ui.datatables,
                     info: false
                 });

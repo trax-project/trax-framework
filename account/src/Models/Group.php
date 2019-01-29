@@ -42,7 +42,7 @@ class Group extends GroupModel
             ],
         ],
         'relations' => [
-            'users' => 'multiple',
+            'users' => ['type' => 'multiple', 'table' => 'trax_account_users'],
         ],
         'defaultValues' => [
             'uuid' => ['type' => 'function', 'default' => 'traxUuid'],

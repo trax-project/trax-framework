@@ -18,7 +18,7 @@ trait TraxModel
         if (!isset($definition->virtualColumns)) $definition->virtualColumns = [];
         if (!isset($definition->ignore)) $definition->ignore = [];
         if (!isset($definition->defaultValues)) $definition->defaultValues = [];
-        $except = array_merge($definition->relations, array_keys($definition->options), $definition->ignore);
+        $except = array_merge(array_keys($definition->relations), array_keys($definition->options), $definition->ignore);
         $definition->visible = array_diff($this->visible, $except);
         return $definition;
     }

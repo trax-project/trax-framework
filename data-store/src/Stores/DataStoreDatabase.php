@@ -57,6 +57,11 @@ class DataStoreDatabase implements DataStoreInterface
     protected $withRelations = [];
 
     /**
+     * Select used by the Get request.
+     */
+    protected $select = ['*'];
+
+    /**
      * To know if dates are automatically managed.
      */
     protected $autoDates = false;
@@ -172,6 +177,9 @@ class DataStoreDatabase implements DataStoreInterface
             if (!$insertTotalCount) $totalCount = $filteredCount;
         }
         
+        // With relations
+        $filtered = $this->withRelations($filtered, $options);
+
         // Order data
         $ordered = $filtered;
         if (isset($args['order-by']) && $args['order-by'] != 'data') {
@@ -188,11 +196,8 @@ class DataStoreDatabase implements DataStoreInterface
         if (isset($args['limit']) && $args['limit'] > 0) $paginated = $paginated->limit($args['limit']);
         if (isset($args['offset'])) $paginated = $paginated->offset($args['offset']);
 
-        // With relations
-        $paginated = $this->withRelations($paginated, $options);
-
         // It time to get them
-        $result = $paginated->get();
+        $result = $paginated->get($this->select);
 
         // Prepare output
         $result->transform(function ($item) use ($options) {
@@ -630,7 +635,7 @@ class DataStoreDatabase implements DataStoreInterface
     {
         foreach ($this->withRelations as $relation) {
             if (isset($model->$relation) && isset($this->relations[$relation])) {
-                if ($this->relations[$relation] == 'multiple') {
+                if ($this->relations[$relation]['type'] == 'multiple') {
                     
                     // Multiple relation
                     $model->$relation->transform(function ($item) use ($options) {
@@ -679,7 +684,18 @@ class DataStoreDatabase implements DataStoreInterface
      */
     protected function orderBy($builder, $by, $dir)
     {
-        return $builder->orderByRaw($this->normalizedDataPropRaw($by). ' '.$dir);
+        $byArray = explode('.', $by);
+        $column = array_shift($byArray);
+        if (isset($this->relations[$column])) {
+            $by = implode('.', $byArray);
+            $table = $this->relations[$column]['table'];
+            $this->select = [$this->table . '.*'];
+            $builder = $builder->join($table, $table . '.id', '=', $this->table.'.'.$column.'_id');
+            $builder = $builder->orderByRaw($table . '.'. $this->normalizedDataPropRaw($by) . ' ' . $dir);
+            return $builder;
+        } else {
+            return $builder->orderByRaw($this->normalizedDataPropRaw($by) . ' ' . $dir);
+        }
     }
 
     /**

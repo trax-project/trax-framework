@@ -39,10 +39,10 @@ class UserStore extends UserStoreSwitch
      * Relations.
      */
     protected $relations = [
-        'role' => 'single', 
-        'organization' => 'single',
-        'entity' => 'single',
-        'groups' => 'multiple'
+        'role' => ['type' => 'single', 'table' => 'trax_account_roles'], 
+        'organization' => ['type' => 'single', 'table' => 'trax_account_entities'],
+        'entity' => ['type' => 'single', 'table' => 'trax_account_entities'],
+        'groups' => ['type' => 'multiple', 'table' => 'trax_account_groups']
     ];
 
 

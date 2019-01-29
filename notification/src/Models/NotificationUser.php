@@ -32,7 +32,7 @@ class NotificationUser extends NotificationUserModel
     protected $trax = [
         'columns' => ['notification_id', 'user_id'],
         'relations' => [
-            'notification' => 'single',
+            'notification' => ['type' => 'single', 'table' => 'trax_notification'],
         ],
     ];
 
