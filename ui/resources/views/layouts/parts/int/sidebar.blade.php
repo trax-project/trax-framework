@@ -10,7 +10,11 @@
     </div>
 
     <div class="sidebar-wrapper">
+        @if(config('trax.ui.menu.multilevel'))
         <ul class="nav" id="sidemenu">
+        @else
+        <ul class="nav trax-menu-flat" id="sidemenu">
+        @endif
 
             <!-- NOTIFICATIONS -->
 
@@ -29,7 +33,7 @@
             <!-- USER MENU ITEMS -->
 
             @foreach($userMenu as $item)
-                <li class="nav-item d-lg-none">
+                <li class="nav-item d-lg-none trax-user-menu">
                     @if(isset($item['params']))
                     <a class="nav-link" href="{{ route($item['route'], $item['params']) }}">
                     @else
@@ -45,7 +49,8 @@
 
             @foreach($sideMenu as $location => $menu)
                 @if(!empty($menu['children']))
-                <li class="nav-item ">
+                @if(config('trax.ui.menu.multilevel'))
+                <li class="nav-item trax-side-menu">
                     <a class="nav-link" data-toggle="collapse" href="#sidemenu-{{$location}}">
                         <i class="material-icons">{{ $menu['icon'] }}</i>
                         <p> @lang($menu['title'])
@@ -54,27 +59,31 @@
                     </a>
                     <div class="collapse" id="sidemenu-{{$location}}" data-parent="#sidemenu">
                         <ul class="nav">
-                            @foreach($menu['children'] as $title => $item)
-                                <li class="nav-item ">
-                                    @if(isset($item['params']))
-                                    <a class="nav-link" href="{{ route($item['route'], $item['params']) }}">
-                                    @else
-                                    <a class="nav-link" href="{{ route($item['route']) }}">
-                                    @endif
-                                        <span class="sidebar-mini"> . </span>
-                                        <span class="sidebar-normal"> @lang($item['title']) </span>
-                                    </a>
-                                </li>
-                            @endforeach
+                @endif
+                @foreach($menu['children'] as $title => $item)
+                            <li class="nav-item trax-side-menu">
+                                @if(isset($item['params']))
+                                <a class="nav-link" href="{{ route($item['route'], $item['params']) }}">
+                                @else
+                                <a class="nav-link" href="{{ route($item['route']) }}">
+                                @endif
+                                    <span class="sidebar-mini"> . </span>
+                                    <span class="sidebar-normal"> @lang($item['title']) </span>
+                                </a>
+                            </li>
+                @endforeach
+                @if(config('trax.ui.menu.multilevel'))
                         </ul>
                     </div>
                 </li>
+                @endif
+
                 @endif
             @endforeach
 
             <!-- LOGOUT -->    
 
-            <li class="nav-item d-lg-none">
+            <li class="nav-item d-lg-none trax-user-menu">
                 <a class="nav-link" href="{{ route('logout') }}" onclick="
                         event.preventDefault();
                         document.getElementById('sidebar-logout-form').submit();">
