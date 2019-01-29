@@ -28,14 +28,14 @@
     <link rel="stylesheet" href="{{ asset('js/lib/DataTables/datatables.min.css') }}">
     
     <!-- Material Dashboard CSS -->
-    <link rel="stylesheet" href="{{ asset('themes/'.config('trax.ui.theme').'/assets/css/material-dashboard.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('themes/'.config('trax.ui.theme').'/material-dashboard.min.css') }}">
 
     <!-- Don't move this after trax.ccs -->
     @yield('head')
 
     <!-- Trax CSS -->
-    <link rel="stylesheet" href="{{ asset('themes/'.config('trax.ui.theme').'/changes/common.css') }}">
-    <link rel="stylesheet" href="{{ asset('themes/'.config('trax.ui.theme').'/changes/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('themes/'.config('trax.ui.theme').'/trax/common.css') }}">
+    <link rel="stylesheet" href="{{ asset('themes/'.config('trax.ui.theme').'/trax/style.css') }}">
 
     <!-- Title -->
     <title>
@@ -64,7 +64,7 @@
     <!--   Core JS Files   -->
     <script src="{{ asset('js/lib/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('js/lib/popper/popper.min.js') }}"></script>
-    <script src="{{ asset('themes/'.config('trax.ui.theme').'/assets/js/core/bootstrap-material-design.min.js') }}"></script>
+    <script src="{{ asset('themes/'.config('trax.ui.theme').'/bootstrap-material-design.min.js') }}"></script>
 
     <!-- Plugins -->
     <script data-pace-options='{"ajax":{"trackMethods":["GET","POST"]}}' src="{{ asset('js/lib/pace/pace.min.js') }}"></script>
@@ -80,7 +80,7 @@
     <script src="{{ asset('js/lib/jasny-bootstrap/js/jasny-bootstrap.min.js') }}"></script>
 
     <!-- Material Kit Core initialisations of plugins and Bootstrap Material Design Library -->
-    <script src="{{ asset('themes/'.config('trax.ui.theme').'/assets/js/material-dashboard.js') }}"></script>
+    <script src="{{ asset('themes/'.config('trax.ui.theme').'/material-dashboard.js') }}"></script>
 
     <!-- Trax JS (VueJS) -->
     <script src="{{ mix('js/bootstrap.js') }}"></script>
