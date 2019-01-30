@@ -23,8 +23,8 @@ class AccountViewsController extends ViewsController
      */
     public function home(Request $request)
     {
-        $this->nav->title = __('trax-ui::common.home');
-        return $this->view('trax-account::home');
+        $this->nav->title = __('trax-ui::common.welcome');
+        return $this->view('home');
     }
 
     /**
