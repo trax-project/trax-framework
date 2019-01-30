@@ -84,7 +84,9 @@ trait DataStorePostgreSql
         $lastOp = '->>';
         $name .= " ".$lastOp." '".$last."'"; 
         if (count($names) > 0) $name = " -> ".$name;
-        $prop = '"'.$column.'"'.$name;
+        if (isset($prefix)) $column = $prefix . '.' . $column;
+        $column = '"' . $column . '"';
+        $prop = $column .$name;
         return $prop;
     }
    
