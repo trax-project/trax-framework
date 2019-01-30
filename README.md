@@ -1,7 +1,7 @@
-TRAX FRAMEWORK
+TRAX Framework
 ==============
 
-This package is part of a larger project named [TRAX PROJECT](https://github.com/trax-project).  
+This package is part of a larger project named [TRAX Project](https://github.com/trax-project).  
 It provides a common layout for several applications, including [TRAX LRS](https://github.com/trax-project/trax-lrs).  
 Its source code is available on [Github](https://github.com/trax-project/trax-framework).
 
