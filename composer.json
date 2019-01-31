@@ -1,0 +1,23 @@
+{
+    "name": "trax/framework",
+    "description": "Common layout for Trax applications",
+    "type": "library",
+    "license": "EUPL-1.2",
+    "authors": [
+        {
+            "name": "Sébastien Fraysse",
+            "email": "sebastien@fraysse.eu",
+            "homepage": "http://fraysse.eu"
+}
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Trax\\Account\\": "account/src/",
+            "Trax\\DataStore\\": "data-store/src/",
+            "Trax\\Foundation\\": "foundation/src/",
+            "Trax\\Notification\\": "notification/src/",
+            "Trax\\UI\\": "ui/src/"
+        }
+    }
+}
