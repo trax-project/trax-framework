@@ -7,7 +7,7 @@ class UserAdminCreateCommand extends UserCommand
     /**
      * The name and signature of the console command.
      */
-    protected $signature = 'user:create-admin {email=admin@traxlrs.test}';
+    protected $signature = 'user:create-admin {email=admin@trax.test}';
 
     /**
      * The console command description.
