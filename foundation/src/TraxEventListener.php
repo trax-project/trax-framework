@@ -1,8 +1,8 @@
 <?php
 
-namespace Trax\Notification;
+namespace Trax\Foundation;
 
-class EventListener
+class TraxEventListener
 {
     /**
      * Services.
@@ -18,7 +18,7 @@ class EventListener
     /**
      * Construct.
      */
-    public function __construct(NotificationServices $services)
+    public function __construct($services)
     {
         $this->services = $services;
     }
@@ -29,9 +29,9 @@ class EventListener
     public function listen($eventName, array $data)
     {
         if (!isset($this->events[$eventName])) return;
-        $notifications = is_array($this->events[$eventName]) ? $this->events[$eventName] : array($this->events[$eventName]);
-        foreach($notifications as $notification) {
-            (new $notification($this->services, $data[0]))->sendInternal();
+        $handlers = is_array($this->events[$eventName]) ? $this->events[$eventName] : array($this->events[$eventName]);
+        foreach($handlers as $handler) {
+            (new $handler($this->services, $data[0]))->handle();
         }
     }
 
