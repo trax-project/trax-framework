@@ -60,6 +60,14 @@ abstract class EventNotification extends NativeNotification
     }
 
     /**
+     * Handle the event.
+     */
+    public function handle()
+    {
+        $this->sendInternal();
+    }
+
+    /**
      * Store the notification.
      */
     public function sendInternal()
