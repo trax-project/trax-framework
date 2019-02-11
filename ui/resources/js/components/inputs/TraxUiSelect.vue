@@ -11,7 +11,7 @@
             </div>
             <span class="form-control trax-form-control-select">
 
-                <select :id="id" class="selectpicker" data-style="select-with-transition" :required="required" :disabled="disabled" :multiple="multiple" v-if="grouped">
+                <select :id="id" class="selectpicker" data-style="select-with-transition" :disabled="disabled" :multiple="multiple" v-if="grouped">
                     <option value="" disabled selected v-if="placeholder">> {{ placeholder }}</option>
                     <option value="" selected v-if="unselected"> {{ unselected }}</option>
                     <optgroup v-for="(group, name) in options" :key="name" :label="name">
@@ -21,7 +21,7 @@
                     </optgroup>
                 </select>
                 
-                <select :id="id" class="selectpicker" data-style="select-with-transition" :required="required" :disabled="disabled" :multiple="multiple" v-else>
+                <select :id="id" class="selectpicker" data-style="select-with-transition" :disabled="disabled" :multiple="multiple" v-else>
                     <option value="" disabled selected v-if="placeholder">> {{ placeholder }}</option>
                     <option value="" selected v-if="unselected"> {{ unselected }}</option>
                     <option v-for="option in options" :key="option.value" :value="option.value">
@@ -40,7 +40,7 @@
             <div :class="formColClass">
                 <span class="form-control trax-form-control-select">
 
-                    <select :id="id" class="selectpicker" data-style="select-with-transition" :required="required" :disabled="disabled" :multiple="multiple" v-if="grouped">
+                    <select :id="id" class="selectpicker" data-style="select-with-transition" :disabled="disabled" :multiple="multiple" v-if="grouped">
                         <option value="" selected v-if="unselected"> {{ unselected }}</option>
                         <optgroup v-for="(group, name) in options" :key="name" :label="name">
                             <option v-for="option in group" :key="option.value" :value="option.value">
@@ -49,7 +49,7 @@
                         </optgroup>
                     </select>
                     
-                    <select :id="id" class="selectpicker" data-style="select-with-transition" :required="required" :disabled="disabled" :multiple="multiple" v-else>
+                    <select :id="id" class="selectpicker" data-style="select-with-transition" :disabled="disabled" :multiple="multiple" v-else>
                         <option value="" selected v-if="unselected"> {{ unselected }}</option>
                         <option v-for="option in options" :key="option.value" :value="option.value" >
                             {{ option.name }}
@@ -63,7 +63,7 @@
         <div v-else>
             <span class="form-control trax-form-control-select">
 
-                <select :id="id" class="selectpicker" data-style="select-with-transition" :required="required" :disabled="disabled" :multiple="multiple" v-if="grouped">
+                <select :id="id" class="selectpicker" data-style="select-with-transition" :disabled="disabled" :multiple="multiple" v-if="grouped">
                     <option value="" disabled selected v-if="placeholder">> {{ placeholder }}</option>
                     <option value="" selected v-if="unselected"> {{ unselected }}</option>
                     <optgroup v-for="(group, name) in options" :key="name" :label="name">
@@ -73,7 +73,7 @@
                     </optgroup>
                 </select>
                 
-                <select :id="id" class="selectpicker" data-style="select-with-transition" :required="required" :disabled="disabled" :multiple="multiple" v-else>
+                <select :id="id" class="selectpicker" data-style="select-with-transition" :disabled="disabled" :multiple="multiple" v-else>
                     <option value="" disabled selected v-if="placeholder">> {{ placeholder }}</option>
                     <option value="" selected v-if="unselected"> {{ unselected }}</option>
                     <option v-for="option in options" :key="option.value" :value="option.value" >
