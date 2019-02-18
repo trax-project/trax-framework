@@ -83,11 +83,11 @@
     <script src="{{ asset('themes/'.config('trax.ui.theme').'/material-dashboard.js') }}"></script>
 
     <!-- Trax JS (VueJS) -->
-    <script src="{{ mix('js/bootstrap.js') }}"></script>
-    <script src="{{ mix('js/trax-ui.js') }}"></script>
-    <script src="{{ mix('js/trax-notification.js') }}"></script>
+    <script src="{{ traxMix('js/bootstrap.js') }}"></script>
+    <script src="{{ traxMix('js/trax-ui.js') }}"></script>
+    <script src="{{ traxMix('js/trax-notification.js') }}"></script>
     @yield('components')
-    <script src="{{ mix('js/app.js') }}"></script>
+    <script src="{{ traxMix('js/app.js') }}"></script>
 
     <!-- Page Specific -->
     @yield('scripts')

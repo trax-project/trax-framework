@@ -1,11 +1,23 @@
 <?php
 
 /**
+ * Generate an absolute URL to a given JS resource.
+ */
+if (!function_exists('traxMix')) {
+
+    function traxMix($file)
+    {
+        return url('/').mix($file);
+    }
+}
+
+/**
  * Get a class name given a route name.
  */
-if (! function_exists('traxClassName')) {
-    
-    function traxClassName($routeName) {
+if (!function_exists('traxClassName')) {
+
+    function traxClassName($routeName)
+    {
         $className = ucwords($routeName, '.-');
         $className = str_replace('.', '\\', $className);
         $className = str_replace('-', '', $className);
