@@ -20,7 +20,7 @@ return [
         You can now log in with your username: __:username__.
     ",
     'password_defined_post' => "
-        If you never defined a password, please, contact immediatly the platform administrator.
+        If you never defined a password, please contact immediatly the platform administrator.
     ",
 
     // Reset password
@@ -41,7 +41,7 @@ return [
         You can now log in with your username: __:username__.
     ",
     'password_reset_post' => "
-        If you never asked for a new password, please, contact immediatly the platform administrator.
+        If you never asked for a new password, please contact immediatly the platform administrator.
     ",
 
 ];
