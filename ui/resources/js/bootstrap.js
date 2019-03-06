@@ -38,6 +38,9 @@ Vue.component('trax-ui-toggle', require('./components/inputs/TraxUiToggle.vue').
 Vue.component('trax-ui-choice', require('./components/inputs/TraxUiChoice.vue').default);
 Vue.component('trax-ui-html', require('./components/inputs/TraxUiHtml.vue').default);
 
+// Loaders
+Vue.component('trax-ui-loader-overlay', require('./components/loaders/TraxUiLoaderOverlay.vue').default);
+
 // Modals
 Vue.component('trax-ui-modal-default', require('./components/modals/TraxUiModalDefault.vue').default);
 Vue.component('trax-ui-modal-plain-header', require('./components/modals/TraxUiModalPlainHeader.vue').default);

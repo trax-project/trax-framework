@@ -8,6 +8,7 @@
             @include('trax-ui::layouts.parts.int.topbar')
             <div class="content pt-0">
                 <div class="container-fluid">
+                    <trax-ui-loader-overlay></trax-ui-loader-overlay>
                     <trax-notification-read></trax-notification-read>
                     @yield('page')
                 </div>

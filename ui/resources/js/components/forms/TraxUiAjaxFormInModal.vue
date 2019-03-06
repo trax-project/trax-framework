@@ -125,26 +125,32 @@
             putData(id, data) {
                 var that = this;
                 var outputData = this.outputData(data);
+                that.$bus.$emit('loader-start-loading');
                 axios.put(this.endpoint+'/'+id, outputData)
                     .then(function (response) {
                         that.bus.$emit(that.id+'-close');
                         that.bus.$emit(that.id+'-updated', {data: outputData, response: response});
+                        that.$bus.$emit('loader-stop-loading');
                     })
                     .catch(function (error) {
                         that.processErrors(error.response.data);
+                        that.$bus.$emit('loader-stop-loading');
                     });
             },
             
             postData(data) {
                 var that = this;
                 var outputData = this.outputData(data);
+                that.$bus.$emit('loader-start-loading');
                 axios.post(this.endpoint, outputData)
                     .then(function (response) {
                         that.bus.$emit(that.id+'-close');
                         that.bus.$emit(that.id+'-created', {data: outputData, response: response});
+                        that.$bus.$emit('loader-stop-loading');
                     })
                     .catch(function (error) {
                         that.processErrors(error.response.data);
+                        that.$bus.$emit('loader-stop-loading');
                     });
             },
 
