@@ -23,7 +23,6 @@ trait Struct
      */
     protected $trax = [
         'columns' => ['uuid', 'type_code', 'parent_id', 'index_id'],
-        'protected' => ['uuid'],
         'ignore' => ['children', 'type'],
     ];
 
@@ -44,6 +43,10 @@ trait Struct
     {
         $this->fillable = array_merge($this->fillable, $this->traitFillable);
         $this->visible = array_merge($this->visible, $this->traitVisible);
+
+        if (!isset($this->protectUuid) || $this->protectUuid) {
+            $this->trax['protected'] = ['uuid'];
+        }
 
         if (isset($this->typeCodeModel)) {
             $this->trax['options'] = ['type' => [
