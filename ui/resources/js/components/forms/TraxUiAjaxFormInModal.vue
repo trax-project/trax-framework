@@ -30,6 +30,7 @@
             return {
                 lang: lang,
                 data: this.form,
+                duplicate: false,
                 nativeData: {},
             }
         },
@@ -54,6 +55,7 @@
         created: function() {
             this.bus.$on(this.id+'-create', this.create);
             this.bus.$on(this.id+'-update', this.update);
+            this.bus.$on(this.id+'-duplicate', this.duplicateForm);
             this.bus.$on(this.id+'-send', this.send);
         },
         
@@ -63,6 +65,7 @@
                 this.clear(defaultData);
                 this.bus.$emit(this.id+'-data', this.data, this.nativeData);
                 this.bus.$emit(this.id+'-open', {title: this.titles.new});
+                this.duplicate = false;
             },
             
             update(data) {
@@ -70,6 +73,15 @@
                 this.setData(data);
                 this.bus.$emit(this.id+'-data', this.data, this.nativeData);
                 this.bus.$emit(this.id+'-open', {title: this.titles.update});
+                this.duplicate = false;
+            },
+            
+            duplicateForm(data) {
+                this.clear();
+                this.setData(data);
+                this.bus.$emit(this.id+'-data-duplicate', this.data, this.nativeData);
+                this.bus.$emit(this.id+'-open', {title: this.titles.duplicate});
+                this.duplicate = true;
             },
             
             send(data) {
@@ -118,15 +130,16 @@
             
             saveData() {
                 this.bus.$emit(this.id+'-errors', {});
-                if (this.data.id) this.putData(this.data.id, this.data);
+                if (this.data.id && !this.duplicate) this.putData(this.data.id, this.data);
                 else this.postData(this.data);
             },
             
             putData(id, data) {
                 var that = this;
                 var outputData = this.outputData(data);
+                var endpoint = this.endpoint+'/'+id;
                 that.$bus.$emit('loader-start-loading');
-                axios.put(this.endpoint+'/'+id, outputData)
+                axios.put(endpoint, outputData)
                     .then(function (response) {
                         that.bus.$emit(that.id+'-close');
                         that.bus.$emit(that.id+'-updated', {data: outputData, response: response});
@@ -141,8 +154,10 @@
             postData(data) {
                 var that = this;
                 var outputData = this.outputData(data);
+                var endpoint = this.endpoint;
+                if (this.duplicate) endpoint += '/'+data.id+'/duplicate';
                 that.$bus.$emit('loader-start-loading');
-                axios.post(this.endpoint, outputData)
+                axios.post(endpoint, outputData)
                     .then(function (response) {
                         that.bus.$emit(that.id+'-close');
                         that.bus.$emit(that.id+'-created', {data: outputData, response: response});
@@ -164,6 +179,7 @@
                         res[prop] = val;
                     }
                 }
+                if (this.duplicate) delete res.id;
                 return res;
             },
             

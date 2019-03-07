@@ -69,6 +69,7 @@ class DataRoutes
         'get' => ['http' => 'get', 'route' => ''],
         'store' => ['http' => 'post', 'route' => ''],
         'find' => ['http' => 'get', 'route' => '/{id}'],
+        'duplicate' => ['http' => 'post', 'route' => '/{id}/duplicate'],
         'update' => ['http' => 'put', 'route' => '/{id}'],
         'delete' => ['http' => 'delete', 'route' => '/{id}'],
         'clear' => ['http' => 'delete', 'route' => ''],

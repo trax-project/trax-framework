@@ -18,6 +18,7 @@
             endpointParams: null,
             header: { default: 1 },
             headerColor: { default: 'primary' },
+            duplicate: null,
             editUrl: null,
             editUrlMap: null,
             orderColumn: null,
@@ -33,12 +34,17 @@
             } else {
                 var editAction = {name: 'edit', icon: 'edit', class: 'btn-default', event: 'edit-update'};
             } 
+            var duplicateAction = {name: 'duplicate', icon: 'file_copy', class: 'btn-default', event: 'edit-duplicate'};
+            var deleteAction = {name: 'delete', icon: 'close', class: 'btn-default', event: 'delete-open', wrapper: true};
+
+            var actions = [];
+            actions.push(editAction);
+            if (this.duplicate) actions.push(duplicateAction);
+            actions.push(deleteAction);
+
             return {
                 dataTable: null,
-                defaultActions: [
-                    editAction,
-                    {name: 'delete', icon: 'close', class: 'btn-default', event: 'delete-open', wrapper: true}
-                ]
+                defaultActions: actions
             };
         },
 

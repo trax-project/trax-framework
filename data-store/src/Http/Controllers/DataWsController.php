@@ -59,7 +59,7 @@ class DataWsController extends DataStoreController
 
         return response()->json($res);
     }
-    
+
     /**
      * Update a data entry.
      */
@@ -77,6 +77,32 @@ class DataWsController extends DataStoreController
             $res = $this->store->update($model->id, $data, $this->options);
             if (!is_string($res) && !is_numeric($res)) $this->finalizeData($res);
             $this->hookDataUpdated($request, $model, $data, $res);
+            return $res;
+        });
+        // End of transaction
+
+        return response()->json($res);
+    }
+
+    /**
+     * Duplicate a data entry.
+     */
+    public function duplicate(Request $request, $id = null)
+    {
+        $this->allowsRead($request, $id);
+        $this->allowsCreate($request);
+        $this->guardStoreRequest($request);
+        $this->validateStoreRequest($request);
+        $data = $this->validateStoreContent($request);
+        $model = $this->store->find($id);
+        
+        // Start Transaction
+        $res = DB::transaction(function () use ($data, $request, $model) {
+            $this->prepareData($data, $request);
+            $res = $this->store->store($data, $this->options);
+            if (!is_string($res) && !is_numeric($res)) $this->finalizeData($res);
+            $this->hookDataStored($request, $data, $res);
+            $this->hookDataDuplicated($request, $model, $data, $res);
             return $res;
         });
         // End of transaction

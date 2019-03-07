@@ -21,4 +21,11 @@ trait DataHook
     {
     }
 
+    /**
+     * Data updated hook.
+     */
+    protected function hookDataDuplicated(Request $request, $model, $data, $res)
+    {
+    }
+
 }
