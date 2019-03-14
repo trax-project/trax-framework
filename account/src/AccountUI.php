@@ -66,7 +66,7 @@ class AccountUI extends UIRegistrar
             $this->sideMenu['users']['roles'] = [
                 'title' => 'trax-account::common.roles',
                 'route' => 'trax.ui.account.role.crud',
-                'permission' => 'trax-account-role-crud',
+                'permission' => 'trax_account_role_crud',
             ];
         }
 
@@ -77,7 +77,7 @@ class AccountUI extends UIRegistrar
             $this->sideMenu['users']['entities'] = [
                 'title' => 'trax-account::common.entities',
                 'route' => 'trax.ui.account.entity.crud',
-                'permission' => 'trax-account-entity-crud',
+                'permission' => 'trax_account_entity_crud',
             ];
         }
 

@@ -187,7 +187,8 @@ class UIServices
                 $item['children'] = $this->allowedEntries($item['children']);
             }
             if (isset($item['permission'])) {
-                $allowed = \TraxAccount::authorizer()->allowed($item['permission']);
+                if (is_array($item['permission'])) $allowed = \TraxAccount::authorizer()->allowedOr($item['permission']);
+                else $allowed = \TraxAccount::authorizer()->allowed($item['permission']);
                 if (!$allowed) continue;
             }
             $res[$key] = $item;
