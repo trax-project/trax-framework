@@ -150,4 +150,17 @@ if (!function_exists('traxCreateExceptionHandlerSwitchClass')) {
     }
 }
 
+/**
+ * Validate something given validation rules.
+ */
+if (!function_exists('traxValidate')) {
+
+    function traxValidate($data, $rules)
+    {
+        $validator = app('validator')->make(['data' => $data], ['data' => $rules]);
+        return $validator->passes();
+    }
+}
+
+
 
