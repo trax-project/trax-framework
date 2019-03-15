@@ -174,6 +174,12 @@
                         that.refresh();
                     })
                     .catch(function (error) {
+                        var errorData = {
+                            status: error.response.status, 
+                            data: error.response.data, 
+                            id: data.id 
+                        }
+                        that.bus.$emit(that.id+'-delete-error', errorData);
                         if (typeof error.response.data == 'string') {
                             that.bus.$emit(that.id+'-toastr-error', error.response.data);
                         }
