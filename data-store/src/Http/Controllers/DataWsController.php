@@ -150,15 +150,7 @@ class DataWsController extends DataStoreController
         $this->allowsDelete($request, $id);
         $this->guardDeleteRequest($request, $id);
         $this->validateDeleteRequest($request, $id);
-        try {
-            $res = $this->store->delete($id);
-        } catch(\Exception $e) {
-            if (isset($this->deleteExceptionMessageKey)) {
-                return response(__($this->deleteExceptionMessageKey), 404);
-            } else {
-                abort(404);
-            }
-        }
+        if ($resp = $this->tryDelete($request, $id)) return $resp;
         return response('', 204);
     }
     
@@ -215,6 +207,22 @@ class DataWsController extends DataStoreController
     protected function withRelations($request, &$options)
     {
         if ($request->has('with')) $options['with'] = $request->input('with');
+    }
+
+    /**
+     * Try to delete a data entry.
+     */
+    protected function tryDelete(Request $request, $id = null)
+    {
+        try {
+            $this->store->delete($id);
+        } catch (\Exception $e) {
+            if (isset($this->deleteExceptionMessageKey)) {
+                return response(__($this->deleteExceptionMessageKey), 403);
+            } else {
+                abort(403);
+            }
+        }
     }
 
     /**
