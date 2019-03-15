@@ -1,9 +1,9 @@
 <template>
 
     <div>
-        <button class="btn btn-primary btn-round" @click="clicked">{{ label }}</button>
-        <trax-ui-modal-confirm :id="id" :title="confirmTitle" :bus="bus" v-if="toBeConfirmed">{{ confirmText }}</trax-ui-modal-confirm>
-        <trax-ui-toastr :id="id+'-toastr'" passed-label="1" :bus="bus"></trax-ui-toastr>
+        <button :class="buttonClass" @click="clicked">{{ label }}</button>
+        <trax-ui-modal-confirm :id="internalId" :title="confirmTitle" :bus="internalBus" v-if="toBeConfirmed">{{ confirmText }}</trax-ui-modal-confirm>
+        <trax-ui-toastr :id="internalId+'-toastr'" passed-label="1" :bus="internalBus"></trax-ui-toastr>
     </div>
     
 </template>
@@ -13,33 +13,40 @@
     
         props: {
             label: null,
+            color: {default: 'primary'},
             endpoint: null,
             confirm: null,
             confirmTitle: {default: lang.trax_ui.form.confirmation},
-            confirmText: {default: lang.trax_ui.form.confirmation_q}
+            confirmText: {default: lang.trax_ui.form.confirmation_q},
+            id: null,
+            bus: null
         },
         
         data: function() {
             return {
                 lang: lang,
-                bus: new Vue()
+                internalBus: new Vue()
             }
         },
         
         computed: {
 
-            id: function() {
+            internalId: function() {
                 return 'trax-ui-ajax-button-'+this.uuid();
             },
 
             toBeConfirmed: function() {
                 return this.confirm || this.confirmTitle || this.confirmText;
+            },
+
+            buttonClass: function() {
+                return 'btn btn-round btn-'+this.color;
             }
 
         },
         
         created: function() {
-            this.bus.$on(this.id+'-confirmed', this.confirmed);
+            this.internalBus.$on(this.internalId+'-confirmed', this.confirmed);
         },
         
         methods: {
@@ -53,7 +60,7 @@
             },
 
             clicked() {
-                if (this.toBeConfirmed) this.bus.$emit(this.id+'-open');
+                if (this.toBeConfirmed) this.internalBus.$emit(this.internalId+'-open');
                 else this.confirmed();
             },
 
@@ -65,10 +72,11 @@
                 var that = this;
                 axios.post(that.endpoint)
                     .then(function (response) {
-                        that.bus.$emit(that.id+'-toastr-success', that.lang.trax_ui.form.done);
+                        if (that.bus && that.id) that.bus.$emit(that.id+'-success');
+                        that.internalBus.$emit(that.internalId+'-toastr-success', that.lang.trax_ui.form.done);
                     })
                     .catch(function (error) {
-                        that.bus.$emit(that.id+'-toastr-error');
+                        that.internalBus.$emit(that.internalId+'-toastr-error');
                     });
             }
         }
