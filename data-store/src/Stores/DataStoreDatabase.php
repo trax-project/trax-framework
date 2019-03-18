@@ -112,6 +112,11 @@ class DataStoreDatabase implements DataStoreInterface
     protected $defaultOrderingCol = 'id';
     protected $defaultOrderingDir = 'asc';
 
+    /**
+     * Is there a join.
+     */
+    protected $join = false;
+
 
     /**
      * Create a new data API instance.
@@ -158,46 +163,43 @@ class DataStoreDatabase implements DataStoreInterface
         $builder = $this->builder;
         if ($insertTotalCount) $totalCount = $this->fastCount();
         
+        // With relations
+        $builder = $this->withRelations($builder, $options);
+
+        // Order data
+        if (isset($args['order-by']) && $args['order-by'] != 'data') {
+            $dir = isset($args['order-dir']) ? $args['order-dir'] : 'asc';
+            $builder = $this->orderBy($builder, $args['order-by'], $dir);
+        }
+
         // Filter data
-        $filtered = $builder;
         if (isset($args['since'])) {
-            $filtered = $this->since($filtered, $args['since']);
+            $builder = $this->since($builder, $args['since']);
         }
         if (isset($args['until'])) {
-            $filtered = $this->until($filtered, $args['until']);
+            $builder = $this->until($builder, $args['until']);
         }
         if (isset($args['search'])) {
-            $filtered = $this->search($filtered, $args['search']);
+            $builder = $this->search($builder, $args['search']);
         }
         if (isset($args['global-search'])) {
-            $filtered = $this->globalSearch($filtered, $args['global-search']);
+            $builder = $this->globalSearch($builder, $args['global-search']);
         }
         if ($insertFilteredCount) {
-            $filteredCount = $filtered->count();
+            $filteredCount = $builder->count();
             if (!$insertTotalCount) $totalCount = $filteredCount;
         }
         
-        // With relations
-        $filtered = $this->withRelations($filtered, $options);
-
-        // Order data
-        $ordered = $filtered;
-        if (isset($args['order-by']) && $args['order-by'] != 'data') {
-            $dir = isset($args['order-dir']) ? $args['order-dir'] : 'asc';
-            $ordered = $this->orderBy($ordered, $args['order-by'], $dir);
-        }
-
-//echo($ordered->toSql());
-//print_r($ordered->getBindings());
+//echo($builder->toSql());
+//print_r($builder->getBindings());
 //die;
 
         // Paginate data
-        $paginated = $ordered;
-        if (isset($args['limit']) && $args['limit'] > 0) $paginated = $paginated->limit($args['limit']);
-        if (isset($args['offset'])) $paginated = $paginated->offset($args['offset']);
+        if (isset($args['limit']) && $args['limit'] > 0) $builder = $builder->limit($args['limit']);
+        if (isset($args['offset'])) $builder = $builder->offset($args['offset']);
 
         // It time to get them
-        $result = $paginated->get($this->select);
+        $result = $builder->get($this->select);
 
         // Prepare output
         $result->transform(function ($item) use ($options) {
@@ -454,11 +456,16 @@ class DataStoreDatabase implements DataStoreInterface
     protected function normalizedDataPropRaw($name, $prefix = null)
     {
         $names = explode('.', $name);
-        if (count($names) == 1) return '`' . $name . '`';
+        if (count($names) == 1) {
+            if (isset($prefix)) return '`' . $prefix . '`.`' . $name . '`';
+            if ($this->join) return '`' . $this->table . '`.`' . $name . '`';
+            return '`' . $name . '`';
+        }
         $column = array_shift($names);
         $name = implode('.', $names);
         $prop = $column.'->"$.'.$name.'"';
-        if (isset($prefix)) $prop = $prefix .'.'. $prop;
+        if (isset($prefix)) $prop = $prefix . '.' . $prop;
+        else if ($this->join) $prop = $this->table . '.' . $prop;
         return $prop;
     }
 
@@ -685,6 +692,7 @@ class DataStoreDatabase implements DataStoreInterface
      */
     protected function orderBy($builder, $by, $dir)
     {
+        $this->join = false;
         $byArray = explode('.', $by);
         $column = array_shift($byArray);
         if (!isset($this->relations[$column])) {
@@ -695,6 +703,7 @@ class DataStoreDatabase implements DataStoreInterface
         } else if ($this->relations[$column]['type'] == 'single') {
 
             // Order by a "belongsTo" relation
+            $this->join = true;
             $by = implode('.', $byArray);
             $table = $this->relations[$column]['table'];
             $this->select = [$this->table . '.*'];
@@ -938,8 +947,8 @@ class DataStoreDatabase implements DataStoreInterface
      */
     protected function searchTermIn($builder, $prop, $searchTerm, $exact = false, $or = false) 
     {
+        $prop = $this->normalizedDataPropRaw($prop);
         if (count(explode('.', $prop)) > 1) {            
-            $prop = $this->normalizedDataPropRaw($prop);
 
             // Case insensitive: only works with 'like'
             if (!$exact) {

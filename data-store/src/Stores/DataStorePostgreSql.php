@@ -74,7 +74,11 @@ trait DataStorePostgreSql
     protected function normalizedDataPropRaw($name, $prefix = null)
     {
         $names = explode('.', $name);
-        if (count($names) == 1) return '"' . $name . '"';
+        if (count($names) == 1) {
+            if (isset($prefix)) return '"' . $prefix . '.' . $name . '"';
+            if ($this->join) return '"' . $this->table . '.' . $name . '"';
+            return '"' . $name . '"';
+        }
         $column = array_shift($names);
         $last = array_pop($names);
         $names = array_map(function($item) {
@@ -85,6 +89,7 @@ trait DataStorePostgreSql
         $name .= " ".$lastOp." '".$last."'"; 
         if (count($names) > 0) $name = " -> ".$name;
         if (isset($prefix)) $column = $prefix . '.' . $column;
+        else if ($this->join) $column = $this->table . '.' . $column;
         $column = '"' . $column . '"';
         $prop = $column .$name;
         return $prop;
