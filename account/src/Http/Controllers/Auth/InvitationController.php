@@ -45,5 +45,12 @@ class InvitationController extends ForgotPasswordController
         return response(__('trax-account::common.sent_invitation_email_error'), 401);
     }
 
+    /**
+     * Get the broker to be used during password reset.
+     */
+    public function broker()
+    {
+        return Password::broker('users_invitations');
+    }
 
 }
