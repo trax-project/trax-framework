@@ -5,7 +5,7 @@ return [
     // User source
     'account_source' => 'Account source',
     'internal' => 'Internal',
-    'external' => 'External',
+    'ldap' => 'LDAP',
 
     // Rights extensions
     'entity_rights_level' => 'Entity level rights',

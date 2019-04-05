@@ -150,6 +150,7 @@ return [
     'accounts' => 'Comptes',
     'accounts_management' => 'Gestion des comptes',
     'active_account' => "Compte actif",
+    'ldap_account' => "Authentification LDAP",
     'username' => "Nom d'utilisateur",
     'access' => "Accès",
     'rights' => 'Droits',

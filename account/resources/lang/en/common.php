@@ -146,6 +146,7 @@ return [
     'accounts' => 'Accounts',
     'accounts_management' => 'Accounts Management',
     'active_account' => 'Active account',
+    'ldap_account' => "LDAP authentication",
     'username' => 'User name',
     'access' => 'Access',
     'rights' => 'Rights',

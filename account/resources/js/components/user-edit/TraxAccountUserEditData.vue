@@ -1,26 +1,22 @@
 <template>
     <div>
 
-        <div class="description" v-if="!selfEdit && !internal" v-show="loaded">
-            <strong>{{ lang.trax_account.options.account_source }}:</strong> {{ lang.trax_account.options[data.source_code] }}
-        </div>
-
         <trax-ui-form :id="id" icons="1" :form="form" :form-extend="formExtend" :action="action" :bus="bus">
 
             <trax-ui-input type="text" icon="person" :placeholder="lang.trax_account.common.username"
-                v-model="form.username" v-bind:error="errors.username" :required="!selfEdit && internal" :disabled="selfEdit || !internal" v-if="withUsername">
+                v-model="form.username" v-bind:error="errors.username" :required="!myProfile && !selfEdit" :disabled="myProfile || selfEdit" v-if="withUsername">
             </trax-ui-input>
 
             <trax-ui-input type="email" icon="email" :placeholder="lang.trax_account.common.email"
-                v-model="form.email" v-bind:error="errors.email" :required="(!selfEdit || withUsername) && internal" :disabled="(selfEdit && !withUsername) || !internal">
+                v-model="form.email" v-bind:error="errors.email" :required="!myProfile && !(selfEdit && !withUsername)" :disabled="myProfile || (selfEdit && !withUsername)">
             </trax-ui-input>
 
             <trax-ui-input type="text" icon="text_fields" :placeholder="lang.trax_account.common.firstname"
-                v-model="form.firstname" v-bind:error="errors.firstname" :required="internal" :disabled="!internal">
+                v-model="form.firstname" v-bind:error="errors.firstname" :required="!myProfile" :disabled="myProfile">
             </trax-ui-input>
 
             <trax-ui-input type="text" icon="text_fields" :placeholder="lang.trax_account.common.lastname"
-                v-model="form.lastname" v-bind:error="errors.lastname" :required="internal" :disabled="!internal">
+                v-model="form.lastname" v-bind:error="errors.lastname" :required="!myProfile" :disabled="myProfile">
             </trax-ui-input>
 
             <trax-ui-select icon="flag" v-model="form.lang" :options="lang_select" v-if="lang_select.length > 1">
@@ -36,7 +32,14 @@
 <script>
     export default {
     
-        props: ['withUsername', 'selfEdit', 'formExtend'],
+        props: {
+            withUsername: null,
+            myProfile: null,
+            selfEdit: null,
+            formExtend: null
+        },
+        
+        props: ['withUsername', 'myProfile', 'selfEdit', 'formExtend'],
         
         data: function() {
             return {
@@ -63,13 +66,6 @@
             }
         },
 
-        computed: {
-
-            internal: function () {
-                return this.data.source_code == 'internal';
-            }
-        },
-        
         created: function() {
             var that = this;
 

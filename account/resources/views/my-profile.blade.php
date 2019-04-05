@@ -12,16 +12,18 @@
     <div class="col-lg-6">
 
         <trax-ui-card-icon-header icon="perm_identity" title="@lang('trax-account::common.personal_data')">
-            <trax-account-user-edit-data self-edit="1" with-username="{{ config('trax-account.auth.username') }}">
+            <trax-account-user-edit-data my-profile="1" self-edit="1" with-username="{{ config('trax-account.auth.username') }}">
             </trax-account-user-edit-data>
         </trax-ui-card-icon-header>
 
     </div>
     <div class="col-lg-6 trax-no-required">
 
+        @if ($user->source_code == 'internal')
         <trax-ui-card-icon-header class="mb-5" icon="lock_outline" title="@lang('trax-account::common.access')">
             <trax-account-user-edit-password></trax-account-user-edit-password>
         </trax-ui-card-icon-header>
+        @endif
 
     </div>
 </div>

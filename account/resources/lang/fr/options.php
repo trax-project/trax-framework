@@ -5,7 +5,7 @@ return [
     // User source
     'account_source' => 'Localisation du compte',
     'internal' => 'Interne',
-    'external' => 'Externe',
+    'ldap' => 'LDAP',
 
     // Rights extensions
     'entity_rights_level' => "Droits sur l'entité",

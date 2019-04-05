@@ -16,8 +16,8 @@ class UserSources extends OptionsModel
             'internal' => [
                 'name' => __('trax-account::options.internal'),
             ],
-            'external' => [
-                'name' => __('trax-account::options.external'),
+            'ldap' => [
+                'name' => __('trax-account::options.ldap'),
             ],
         ];
     }

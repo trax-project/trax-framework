@@ -25,6 +25,4 @@ class LoginController extends NativeLoginController
         return $credentials;
     }
 
-
-
 }

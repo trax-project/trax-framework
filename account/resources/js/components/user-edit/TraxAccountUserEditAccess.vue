@@ -2,8 +2,17 @@
     <div>
 
         <form class="trax-form pb-3" v-show="loaded">
+
+            <!-- Account activation -->
+
             <trax-ui-toggle :text="lang.trax_account.common.active_account" :disabled="selfEdit==1" v-model="active">
             </trax-ui-toggle>
+
+            <!-- LDAP -->
+
+            <trax-ui-toggle :text="lang.trax_account.common.ldap_account" :disabled="selfEdit==1" v-model="ldap">
+            </trax-ui-toggle>
+            
         </form>
 
         <div v-show="active && invitation">
@@ -39,30 +48,26 @@
                 loaded: false,
                 id: 'trax-account-user-edit',
                 lang: lang,
-                data: {
-                    source_code: null
-                },
                 active: null,
+                ldap: null,
                 password_endpoint: app_url+'invitation/email',
                 bus: this.$bus
             }
         },
 
-        computed: {
-
-            internal: function () {
-                return this.data.source_code == 'internal';
-            }
-        },
-        
         created: function() {
             this.bus.$on(this.id+'-data', this.setData);
             this.bus.$on(this.id+'-send-invitation-confirmed', this.resetPassword);
         },
 
         watch: {
+
             active: function (value) {
                 if (this.loaded) this.bus.$emit(this.id+'-changed', {active: value});
+            },
+
+            ldap: function (value) {
+                if (this.loaded) this.bus.$emit(this.id+'-changed', {source_code: value ? 'ldap' : 'internal'});
                 this.loaded = true;
             }
         },
@@ -72,6 +77,7 @@
             setData(data) {
                 this.data = data;
                 this.active = data.active;
+                this.ldap = (data.source_code == 'ldap');
             },
 
             resetPassword() {

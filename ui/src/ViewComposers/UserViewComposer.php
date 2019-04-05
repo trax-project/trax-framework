@@ -20,7 +20,7 @@ trait UserViewComposer
             $user = $accountServices->users()->find($userId);
             $permissions = false;
             if (isset($user->role)) $permissions = $user->role->permissions;
-            $user = $user->only(['id', 'uuid', 'email', 'fullname', 'data', 'admin']);
+            $user = $user->only(['id', 'uuid', 'email', 'fullname', 'data', 'admin', 'source_code']);
             $user = json_decode(json_encode($user));
             if ($permissions) $user->permissions = $permissions;
             else $user->permissions = (object)[];

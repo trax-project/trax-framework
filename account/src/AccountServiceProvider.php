@@ -7,6 +7,7 @@ use Illuminate\Contracts\Debug\ExceptionHandler;
 use Trax\Account\Exceptions\AccountExceptionHandler;
 use Trax\Account\Routes\AuthRoutes;
 use Trax\Account\Validators\AccountValidator;
+use Trax\Account\Ldap\LdapGuard;
 use Trax\DataStore\DataStoreServiceProvider;
 
 class AccountServiceProvider extends DataStoreServiceProvider
@@ -77,6 +78,12 @@ class AccountServiceProvider extends DataStoreServiceProvider
         $models = $this->models;
         $this->app->singleton('Trax\Account\AccountServices', function ($app) use($plugin , $models) {
             return new AccountServices($app, $plugin, $models);
+        });
+
+        // Extend the Web Guard in order to implement LDAP alternative
+        $this->app['auth']->extend('ldap', function ($app, $name, $config) {
+            $provider = $app['auth']->createUserProvider($config['provider'] ?? null);
+            return new LdapGuard($name, $provider, $app['session.store']);
         });
     }
 
