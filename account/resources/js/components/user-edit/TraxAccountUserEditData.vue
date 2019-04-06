@@ -4,19 +4,19 @@
         <trax-ui-form :id="id" icons="1" :form="form" :form-extend="formExtend" :action="action" :bus="bus">
 
             <trax-ui-input type="text" icon="person" :placeholder="lang.trax_account.common.username"
-                v-model="form.username" v-bind:error="errors.username" :required="!myProfile && !selfEdit" :disabled="myProfile || selfEdit" v-if="withUsername">
+                v-model="form.username" v-bind:error="errors.username" :required="!usernameDisabled" :disabled="usernameDisabled" v-if="withUsername">
             </trax-ui-input>
 
             <trax-ui-input type="email" icon="email" :placeholder="lang.trax_account.common.email"
-                v-model="form.email" v-bind:error="errors.email" :required="!myProfile && !(selfEdit && !withUsername)" :disabled="myProfile || (selfEdit && !withUsername)">
+                v-model="form.email" v-bind:error="errors.email" :required="!emailDisabled" :disabled="emailDisabled">
             </trax-ui-input>
 
             <trax-ui-input type="text" icon="text_fields" :placeholder="lang.trax_account.common.firstname"
-                v-model="form.firstname" v-bind:error="errors.firstname" :required="!myProfile" :disabled="myProfile">
+                v-model="form.firstname" v-bind:error="errors.firstname" required="1">
             </trax-ui-input>
 
             <trax-ui-input type="text" icon="text_fields" :placeholder="lang.trax_account.common.lastname"
-                v-model="form.lastname" v-bind:error="errors.lastname" :required="!myProfile" :disabled="myProfile">
+                v-model="form.lastname" v-bind:error="errors.lastname" required="1">
             </trax-ui-input>
 
             <trax-ui-select icon="flag" v-model="form.lang" :options="lang_select" v-if="lang_select.length > 1">
@@ -38,8 +38,6 @@
             selfEdit: null,
             formExtend: null
         },
-        
-        props: ['withUsername', 'myProfile', 'selfEdit', 'formExtend'],
         
         data: function() {
             return {
@@ -64,6 +62,17 @@
                 },
                 bus: this.$bus
             }
+        },
+
+        computed: {
+
+            usernameDisabled() {
+                return this.myProfile || this.selfEdit ? true : null;
+            },
+
+            emailDisabled() {
+                return !this.withUsername && (this.myProfile || this.selfEdit) ? true : null;
+            },
         },
 
         created: function() {

@@ -62,7 +62,9 @@ class LdapConnector
         if (!function_exists('ldap_bind')) $this->error('PHP LDAP extension not installed!');
 
         // Get config
-        $this->config = (object)config('trax-account.ldap.ad');
+        $this->config = config('trax-account.ldap');
+        if (empty($this->config)) $this->error('LDAP config not defined!');
+        $this->config = (object)$this->config;
 
         // Check host
         if (empty($this->config->host)) $this->error('LDAP host not defined!');
