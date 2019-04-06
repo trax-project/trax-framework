@@ -4,6 +4,7 @@ namespace Trax\Account\Validators;
 
 use Auth;
 use Hash;
+use Trax\Account\Ldap\LdapConnector;
 
 class AccountValidator
 {
@@ -41,7 +42,13 @@ class AccountValidator
     protected function registerPasswordCheckRule()
     {
         $this->validator->extend('passcheck', function ($attribute, $value, $parameters, $validator) {
-            return Hash::check($value, Auth::user()->getAuthPassword());
+
+            $user = Auth::user();
+            if ($user->source_code == 'ldap') {
+                return (new LdapConnector)->validateCredentials($user, ['password' => $value]);
+            } else {
+                return Hash::check($value, Auth::user()->getAuthPassword());
+            }
         });
     }
 
