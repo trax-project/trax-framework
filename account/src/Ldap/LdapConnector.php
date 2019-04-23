@@ -114,9 +114,12 @@ class LdapConnector
         }
 
         // Start TLS
+        // Should not be used with ldaps!
+        /*
         if ($this->config->tls && (!ldap_start_tls($connresult))) {
             $this->error('LDAP start TLS failed!');
         }
+        */
 
         // Auth
         $bindresult = @ldap_bind($connresult, $this->config->username, $this->config->password);
