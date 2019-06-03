@@ -16,7 +16,7 @@ class CorsMiddleware
         if (!$request->hasHeader('Origin')) $origin = config('app.url');
         else $origin = $request->header('Origin');
 
-        if (get_class($response) == 'Illuminate\Http\Response') {
+        if (get_class($response) == 'Illuminate\Http\Response' || get_class($response) == 'Illuminate\Http\JsonResponse') {
 
             $response->header('Access-Control-Allow-Origin', $origin);
             $response->header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT, DELETE');
