@@ -3,8 +3,9 @@
 
         <div :id="id" v-if="notif">
             
-            <p class="font-weight-bold" v-if="notif.notification.context">
-                {{ notif.notification.context }}
+            <p v-if="notif.notification.styled_context" v-html="notif.notification.styled_context">
+            </p>
+            <p v-else-if="notif.notification.context" v-html="notif.notification.context" class="font-weight-bold">
             </p>
 
             <p>{{ notif.notification.message }}</p>

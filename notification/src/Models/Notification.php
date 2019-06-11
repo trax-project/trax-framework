@@ -23,13 +23,13 @@ class Notification extends NotificationModel
      * The attributes that should be visible.
      */
     protected $visible = [
-        'id', 'data', 'title', 'context', 'message', 'actionLabel', 'created_at', 'updated_at'
+        'id', 'data', 'title', 'context', 'styled_context', 'message', 'actionLabel', 'created_at', 'updated_at'
     ];
 
     /**
      * The accessors to append to the model's array form.
      */
-    protected $appends = ['title', 'context', 'message', 'actionLabel'];
+    protected $appends = ['title', 'context', 'styled_context', 'message', 'actionLabel'];
 
 
     /**
@@ -46,6 +46,14 @@ class Notification extends NotificationModel
     public function getContextAttribute($value)
     {
         return isset($this->data->context) ? __($this->data->context) : '';
+    }
+
+    /**
+     * Styled Context.
+     */
+    public function getStyledContextAttribute($value)
+    {
+        return isset($this->data->styled_context) ? __($this->data->styled_context) : '';
     }
 
     /**

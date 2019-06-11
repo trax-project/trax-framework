@@ -32,6 +32,11 @@ abstract class EventNotification extends NativeNotification
     protected $context;
 
     /**
+     * Notification message styled context.
+     */
+    protected $styledContext;
+
+    /**
      * Notification action label.
      */
     protected $actionLabel;
@@ -89,6 +94,7 @@ abstract class EventNotification extends NativeNotification
         return [
             'title' => $this->defineTitle(),
             'context' => $this->defineContext(),
+            'styled_context' => $this->defineStyledContext(),
             'message' => $this->defineMessage(),
             'action' => $this->defineAction(),
         ];
@@ -108,6 +114,14 @@ abstract class EventNotification extends NativeNotification
     protected function defineContext()
     {
         return $this->context;
+    }
+
+    /**
+     * Define styled context.
+     */
+    protected function defineStyledContext()
+    {
+        return $this->styledContext;
     }
 
     /**
