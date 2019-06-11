@@ -47,6 +47,11 @@ class DataWsController extends DataStoreController
         $this->validateStoreRequest($request);
         $data = $this->validateStoreContent($request);
 
+        // Preflight.
+        if ($request->has('preflight') && $request->input('preflight')) {
+            return response('', 204);
+        }
+
         // Start Transaction
         $res = DB::transaction(function () use ($data, $request) {
             $this->prepareData($data, $request);
@@ -71,6 +76,11 @@ class DataWsController extends DataStoreController
         $data = $this->validateUpdateContent($request, $id);
         $model = $this->store->find($id);
         
+        // Preflight.
+        if ($request->has('preflight') && $request->input('preflight')) {
+            return response('', 204);
+        }
+
         // Start Transaction
         $res = DB::transaction(function () use ($data, $request, $model) {
             $this->prepareData($data, $request, $model);
