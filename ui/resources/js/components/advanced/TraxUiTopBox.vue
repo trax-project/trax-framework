@@ -1,6 +1,6 @@
 <template>
 
-    <trax-ui-card-with-background vertical-align="center" :class="topClass" v-show="loaded"
+    <trax-ui-card-with-background vertical-align="center" :class="cardClass" v-show="loaded"
         :background-folder="backgroundFolderAttr" :background-image="backgroundImageAttr">
         
         <div v-html="title3Html"></div>
@@ -50,6 +50,7 @@
             userName: null,
             userPicture: null,
             userPictureFolder: {default: app_url},
+            customClass: {default: ''},
 
             // Ajax
             endpoint: null,
@@ -71,8 +72,9 @@
 
         computed: {
 
-            topClass: function () {
-                return this.val('userPicture') ? 'trax-top-box trax-top-box-user' : 'trax-top-box';
+            cardClass: function () {
+                var res = this.val('userPicture') ? 'trax-top-box trax-top-box-user' : 'trax-top-box';
+                return res + ' ' + this.customClass;
             },
 
             params: function () {
