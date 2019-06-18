@@ -30,6 +30,8 @@ return [
     'save' => 'Enregistrer',
     'submit' => 'Soumettre',
     'add_file' => 'Ajouter un fichier',
+    'select_all' => 'Tout sélectionner',
+    'unselect_all' => 'Tout désélectionner',
 
     // Confirmations
     'confirm' => 'Confirmer',
