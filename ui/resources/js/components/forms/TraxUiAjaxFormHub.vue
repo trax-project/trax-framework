@@ -37,6 +37,10 @@
                 that.concatData(data);
             });
 
+            this.bus.$on(that.id+'-final-save-all', function(data) {
+                that.concatData(data);
+            });
+
             this.getData(this.resourceId);
         },
         

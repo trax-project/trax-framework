@@ -1,7 +1,7 @@
 <template>
     <div>
 
-        <trax-ui-form :id="id" :form="form" :action="action" :bus="bus">
+        <trax-ui-form :id="id" :form="form" :action="action" :bus="bus" :source="source" :target="target">
 
             <trax-ui-toggle :text="lang.trax_account.common.admin_account" :disabled="selfEdit==1" v-model="form.admin">
             </trax-ui-toggle>
@@ -46,6 +46,8 @@
         props: {
             selfEdit: null,
             manageEntities: null,
+            source: {default: '1'},
+            target: {default: 'final'}
         },
         
         data: function() {

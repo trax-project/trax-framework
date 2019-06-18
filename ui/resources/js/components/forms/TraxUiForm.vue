@@ -20,6 +20,8 @@
             formExtend: null,
             icons: { default: false }, 
             action: null, 
+            source: {default: '1'},
+            target: {default: 'final'},
             bus: null
         },
     
@@ -40,6 +42,8 @@
         created: function() {
             var that = this;
 
+            this.bus.$on(this.id+'-'+this.source+'-save-all', this.saveAll);
+
             this.bus.$on(that.id+'-data', function(data) {
                 that.loaded = true;
             });
@@ -47,10 +51,11 @@
         
         methods: {
 
-            mergeData(data) {
-                for (var index in data) {
-                    this.data[index] = data[index];
-                }
+            saveAll(data) {
+                this.errors = {};
+                for (var attr in this.form) { data[attr] = this.form[attr]; }
+                for (var attr in this.formExtend) { data[attr] = this.formExtend[attr]; }
+                this.bus.$emit(this.id+'-'+this.target+'-save-all', data);
             },
 
             saveData() {

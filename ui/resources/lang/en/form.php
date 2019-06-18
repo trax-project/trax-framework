@@ -28,6 +28,7 @@ return [
     'edit' => 'Edit',
     'delete' => 'Delete',
     'save' => 'Save',
+    'save_all' => 'Save All',
     'submit' => 'Submit',
     'add_file' => 'Add File',
     'select_all' => 'Select all',

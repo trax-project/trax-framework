@@ -28,6 +28,7 @@ return [
     'edit' => 'Modifier',
     'delete' => 'Supprimer',
     'save' => 'Enregistrer',
+    'save_all' => 'Tout enregistrer',
     'submit' => 'Soumettre',
     'add_file' => 'Ajouter un fichier',
     'select_all' => 'Tout sélectionner',

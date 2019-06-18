@@ -1,7 +1,8 @@
 <template>
     <div>
 
-        <trax-ui-form :id="id" icons="1" :form="form" :form-extend="formExtend" :action="action" :bus="bus">
+        <trax-ui-form :id="id" icons="1" :form="form" :form-extend="formExtend" :action="action" :bus="bus"
+            :source="source" :target="target">
 
             <trax-ui-input type="text" icon="person" :placeholder="lang.trax_account.common.username"
                 v-model="form.username" v-bind:error="errors.username" :required="!usernameDisabled" :disabled="usernameDisabled || requiredDisabled" v-if="withUsername">
@@ -40,7 +41,9 @@
             myProfile: null,
             selfEdit: null,
             formExtend: null,
-            disableRequiredFields: null
+            disableRequiredFields: null,
+            source: {default: '1'},
+            target: {default: 'final'}
         },
         
         data: function() {
