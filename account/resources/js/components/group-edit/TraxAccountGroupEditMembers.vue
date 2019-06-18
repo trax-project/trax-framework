@@ -17,7 +17,7 @@
                     ''
                 ],
                 props: [
-                    {source: 'email'},
+                    {source: this.email, name: 'email'},
                     {source: this.fullname, order: 'lastname'}
                 ],
                 id: 'trax-account-group-edit-members',
@@ -43,10 +43,19 @@
         
             // Columns rendering
 
-            fullname(data, type, row, meta) {
-                return row.data.lastname + ' ' + row.data.firstname;
+            email(data, type, row, meta) {
+                return this.active(row, row.email);
             },
 
+            fullname(data, type, row, meta) {
+                return this.active(row, row.data.lastname + ' ' + row.data.firstname);
+            },
+
+            active(row, content) {
+                if (row.active) return content;
+                return '<span class="trax-text-muted">' + content + '</span>';
+            },
+            
             initTable() {
                 var that = this;
 
@@ -90,7 +99,7 @@
                     var prop = this.props[index];
                     if (typeof prop.source === "function") {
                         if (prop.order == undefined) {
-                            var cell = {data: null, name: prop.source.name, orderable: false, render: prop.source};
+                            var cell = {data: null, name: prop.name, render: prop.source, orderable: false};
                         } else {
                             var cell = {data: null, name: prop.order, render: prop.source};
                         }

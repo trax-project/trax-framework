@@ -19,12 +19,12 @@
                 ''
             ];
             var props = [
-                {source: 'email'},
+                {source: this.email},
                 {source: this.fullname, order: 'lastname'}
             ];
             if (this.withUsername) {
                 titles.unshift(lang.trax_account.common.username);
-                props.unshift({source: 'username', class: 'font-weight-bold'});
+                props.unshift({source: this.username, class: 'font-weight-bold'});
             }
             return {
                 endpoint: app_url+"trax/ajax/account/users",
@@ -39,8 +39,21 @@
         
             // Columns rendering
 
+            email(data, type, row, meta) {
+                return this.active(row, row.email);
+            },
+
             fullname(data, type, row, meta) {
-                return row.data.lastname + ' ' + row.data.firstname;
+                return this.active(row, row.data.lastname + ' ' + row.data.firstname);
+            },
+
+            username(data, type, row, meta) {
+                return this.active(row, row.username);
+            },
+
+            active(row, content) {
+                if (row.active) return content;
+                return '<span class="trax-text-muted">' + content + '</span>';
             }
         }
 
