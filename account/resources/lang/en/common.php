@@ -35,6 +35,7 @@ return [
     ',
     'sent_invitation_email_success' => 'The invitation has been sent.',
     'sent_invitation_email_error' => 'Sorry, we encountered a problem. The invitation has not been sent.',
+    'last_connection' => 'Last connection',
 
     // Roles
     'role' => 'Role',

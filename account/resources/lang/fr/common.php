@@ -40,6 +40,7 @@ return [
     ",
     'sent_invitation_email_success' => "L'invitation a bien été envoyée.",
     'sent_invitation_email_error' => "Désolé, l'invitation n'a pas pu être envoyée.",
+    'last_connection' => 'Dernière connexion',
 
     // Roles
     'role' => 'Rôle',

@@ -1,6 +1,11 @@
 <template>
     <div>
 
+        <p v-if="hasLoggedin">
+            <strong>{{ lang.trax_account.common.last_connection }}: </strong>
+            {{ loggedin }}
+        </p>
+
         <form class="trax-form pb-3" v-show="loaded">
 
             <!-- Account activation -->
@@ -48,6 +53,7 @@
                 loaded: false,
                 id: 'trax-account-user-edit',
                 lang: lang,
+                data: null,
                 active: null,
                 ldap: null,
                 password_endpoint: app_url+'invitation/email',
@@ -69,6 +75,18 @@
             ldap: function (value) {
                 if (this.loaded) this.bus.$emit(this.id+'-changed', {source_code: value ? 'ldap' : 'internal'});
                 this.loaded = true;
+            }
+        },
+
+        computed: {
+
+            hasLoggedin: function () {
+                return this.data && this.data.status && this.data.status.loggedin;
+            },
+
+            loggedin: function () {
+                if (!this.hasLoggedin) return '';
+                return moment(this.data.status.loggedin).format('DD MMM YYYY');;
             }
         },
 

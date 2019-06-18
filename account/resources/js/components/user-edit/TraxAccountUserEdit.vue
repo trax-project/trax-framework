@@ -23,6 +23,7 @@
                     source_code: { source:'source_code' },
                     admin: { source:'admin' },
                     active: { source:'active' },
+                    status: { source:'data.status' },
                     entity_type_code: { source:'entity_type_code' },
                     role_id: { source:'role_id' },
                     organization_id: { source:'organization_id' },

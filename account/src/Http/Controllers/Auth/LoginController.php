@@ -25,4 +25,13 @@ class LoginController extends NativeLoginController
         return $credentials;
     }
 
+    /**
+     * The user has been authenticated.
+     */
+    protected function authenticated(Request $request, $user)
+    {
+        $user->setStatus('loggedin');
+    }
+
+
 }
