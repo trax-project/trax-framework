@@ -97,6 +97,7 @@
                     serverSide: true,
                     deferRender: true,
                     processing: false,
+                    stateSave: true,
                     ajax: {
                         url: that.endpoint,
                         data: that.params
