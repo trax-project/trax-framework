@@ -40,6 +40,7 @@ Vue.component('trax-account-basic-client-crud-table', require('./components/basi
 Vue.component('trax-account-group-crud', require('./components/group-crud/TraxAccountGroupCrud.vue').default);
 Vue.component('trax-account-group-crud-form', require('./components/group-crud/TraxAccountGroupCrudForm.vue').default);
 Vue.component('trax-account-group-crud-table', require('./components/group-crud/TraxAccountGroupCrudTable.vue').default);
+Vue.component('trax-account-group-crud-search', require('./components/group-crud/TraxAccountGroupCrudSearch.vue').default);
 
 // Group edit
 Vue.component('trax-account-group-edit-candidates', require('./components/group-edit/TraxAccountGroupEditCandidates.vue').default);

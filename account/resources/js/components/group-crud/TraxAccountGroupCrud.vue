@@ -18,7 +18,13 @@
         <trax-ui-modal-confirm id="trax-account-group-delete" :title="this.lang.trax_account.common.group_deletion" :bus="bus">
             {{ lang.trax_account.common.confirm_delete_group_q }}
         </trax-ui-modal-confirm>
-    
+
+        <!-- Search modal -->
+
+        <trax-ui-modal-default id="trax-account-group-search" :bus="bus" :title="lang.trax_ui.form.advanced_search">
+            <trax-account-group-crud-search id="trax-account-group" :bus="bus"></trax-account-group-crud-search>
+        </trax-ui-modal-default>
+
         <!-- Toastr -->
 
         <trax-ui-toastr id="trax-account-group-toastr" :bus="bus" passed-label="1" no-progress="1">
@@ -34,6 +40,7 @@
             return {
                 lang: lang,
                 card_actions: [
+                    { icon: 'search', event: 'trax-account-group-search-open' },
                     { icon: 'add_box', event: 'trax-account-group-edit-create' }
                 ],
                 bus: new Vue()

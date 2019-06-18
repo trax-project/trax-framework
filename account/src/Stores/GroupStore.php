@@ -21,6 +21,7 @@ class GroupStore extends GroupStoreSwitch
      */
     protected $filters = [
         'ids' => ['type' => 'In', 'target' => 'id'],
+        'status_code' => ['type' => 'Equal', 'target' => 'data.status_code'],
     ];
 
 }

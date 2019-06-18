@@ -33,6 +33,9 @@ return [
     'add_file' => 'Ajouter un fichier',
     'select_all' => 'Tout sélectionner',
     'unselect_all' => 'Tout désélectionner',
+    'search' => 'Rechercher',
+    'reset' => 'Réinitialiser',
+    'advanced_search' => 'Recherche avancée',
 
     // Confirmations
     'confirm' => 'Confirmer',

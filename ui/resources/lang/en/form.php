@@ -33,6 +33,9 @@ return [
     'add_file' => 'Add File',
     'select_all' => 'Select all',
     'unselect_all' => 'Unselect all',
+    'search' => 'Search',
+    'reset' => 'Reset',
+    'advanced_search' => 'Advanced Search',
 
     // Confirmations
     'confirm' => 'Confirm',

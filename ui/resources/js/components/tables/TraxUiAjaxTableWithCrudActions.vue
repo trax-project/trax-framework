@@ -44,6 +44,7 @@
 
             return {
                 dataTable: null,
+                filters: {},
                 defaultActions: actions
             };
         },
@@ -66,6 +67,7 @@
         created: function() {
             this.bus.$on(this.id+'-edit-created', this.created);
             this.bus.$on(this.id+'-edit-updated', this.refresh);
+            this.bus.$on(this.id+'-filter', this.filter);
             this.bus.$on(this.id+'-delete-confirmed', this.deleteItem);
         },
         
@@ -100,7 +102,10 @@
                     stateSave: true,
                     ajax: {
                         url: that.endpoint,
-                        data: that.params
+                        data: function(data) {
+                            data.filters = that.filters;
+                            Object.keys(that.params).forEach(function(key) { data[key] = that.params[key]; });
+						},
                     },
                     columns: settings.columns,
                     ordering: settings.ordering,
@@ -200,6 +205,11 @@
             },
 
             refresh() {
+                this.dataTable.ajax.reload(null, true);
+            },
+
+            filter(filters) {
+                this.filters = filters ? filters : {};
                 this.dataTable.ajax.reload(null, true);
             }
         }

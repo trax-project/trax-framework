@@ -1,8 +1,10 @@
 <template>
+
     <trax-ui-ajax-table-with-crud-actions 
         :id="id" :titles="titles" :props="props" :bus="bus" :actions="actions" 
         :endpoint="endpoint" :endpoint-params="endpointParams">
     </trax-ui-ajax-table-with-crud-actions>
+
 </template>
 
 <script>
@@ -12,6 +14,7 @@
 
         data: function() {
             return {
+                lang: lang,
                 id: 'trax-account-group',
                 endpoint: app_url+"trax/ajax/account/groups",
                 titles: [
@@ -26,7 +29,7 @@
                     {source: this.status }
                 ],
                 actions: [
-                    {name: 'members', icon: 'group', class: 'btn-default', url: app_url+'trax/ui/account/group/edit'}
+                    { name: 'members', icon: 'group', class: 'btn-default', url: app_url+'trax/ui/account/group/edit' }
                 ],
                 endpointParams: {
                     with: ['status']

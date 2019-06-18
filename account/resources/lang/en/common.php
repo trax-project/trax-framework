@@ -164,5 +164,7 @@ return [
     'perm_basic_clients_management' => 'Settings: Basic HTTP Clients',
     'perm_agreement_write' => 'Settings: Legal Agreement Editing',
 
+    // Others
+    'all_status' => 'All status',
 
 ];

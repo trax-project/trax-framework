@@ -168,6 +168,7 @@ return [
     'perm_basic_clients_management' => 'Réglages: Clients Basic HTTP',
     'perm_agreement_write' => 'Réglages: rédaction des mentions légales',
 
-
+    // Others
+    'all_status' => 'Tous les statuts',
 
 ];
