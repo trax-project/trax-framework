@@ -27,7 +27,8 @@
 
         data: function() {
             return {
-                dataTable: null
+                dataTable: null,
+                filters: {}
             };
         },
 
@@ -43,7 +44,10 @@
         },
 
         created: function() {
-            if (this.bus) this.bus.$on(this.id+'-refresh', this.refresh);
+            if (this.bus) {
+                this.bus.$on(this.id+'-refresh', this.refresh);
+                this.bus.$on(this.id+'-filter', this.filter);
+            }
         },
         
         mounted: function() {
@@ -76,7 +80,10 @@
                     processing: false,
                     ajax: {
                         url: that.endpoint,
-                        data: that.params
+                        data: function(data) {
+                            data.filters = that.filters;
+                            Object.keys(that.params).forEach(function(key) { data[key] = that.params[key]; });
+						},
                     },
                     columns: settings.columns,
                     ordering: settings.ordering,
@@ -133,6 +140,11 @@
 
             refresh() {
                 this.dataTable.ajax.reload(null, true);
+            },
+
+            filter(filters) {
+                this.filters = filters ? filters : {};
+                this.refresh();
             }
         }
     }

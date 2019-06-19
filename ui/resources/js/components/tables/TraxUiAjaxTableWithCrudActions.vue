@@ -210,7 +210,7 @@
 
             filter(filters) {
                 this.filters = filters ? filters : {};
-                this.dataTable.ajax.reload(null, true);
+                this.refresh();
             }
         }
     }
