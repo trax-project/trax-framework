@@ -7,7 +7,7 @@
             </div>
             <div class="trax-card-actions">
                 <button class="btn btn-link" v-for="action in actions" :key="action.icon" :id="action.event" @click="callAction">
-                    <i class="material-icons">{{ action.icon }}</i>
+                    <i :class="'material-icons text-' + headerColor">{{ action.icon }}</i>
                 </button>
             </div>
             <h4 class="card-title"> {{ title }} </h4>
