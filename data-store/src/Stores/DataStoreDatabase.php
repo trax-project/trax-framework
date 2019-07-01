@@ -134,6 +134,14 @@ class DataStoreDatabase implements DataStoreInterface
     }
 
     /**
+     * Get the driver.
+     */
+    public function driver()
+    {
+        return $this->driver;
+    }
+
+    /**
      * Get the name of the model.
      */
     public function model()

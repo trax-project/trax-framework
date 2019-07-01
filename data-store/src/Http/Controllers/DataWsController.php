@@ -3,16 +3,16 @@
 namespace Trax\DataStore\Http\Controllers;
 
 use Illuminate\Http\Request;
-use DB;
 
 use Trax\DataStore\Http\Validations\DataValidation;
 use Trax\DataStore\Http\Guards\DataGuard;
 use Trax\DataStore\Http\Hooks\DataHook;
+use Trax\DataStore\Utils\Transaction;
 use Trax\Account\DataStoreAuthorizer;
 
 class DataWsController extends DataStoreController
 {
-    use DataStoreAuthorizer, DataGuard, DataHook, DataValidation;
+    use DataStoreAuthorizer, DataGuard, DataHook, DataValidation, Transaction;
 
     /**
      * Delete exception message key.
@@ -53,7 +53,7 @@ class DataWsController extends DataStoreController
         }
 
         // Start Transaction
-        $res = DB::transaction(function () use ($data, $request) {
+        $res = $this->transaction(function () use ($data, $request) {
             $this->prepareData($data, $request);
             $res = $this->store->store($data, $this->options);
             if (!is_string($res) && !is_numeric($res)) $this->finalizeData($res);
@@ -82,7 +82,7 @@ class DataWsController extends DataStoreController
         }
 
         // Start Transaction
-        $res = DB::transaction(function () use ($data, $request, $model) {
+        $res = $this->transaction(function () use ($data, $request, $model) {
             $this->prepareData($data, $request, $model);
             $res = $this->store->update($model->id, $data, $this->options);
             if (!is_string($res) && !is_numeric($res)) $this->finalizeData($res);
@@ -107,7 +107,7 @@ class DataWsController extends DataStoreController
         $model = $this->store->find($id);
         
         // Start Transaction
-        $res = DB::transaction(function () use ($data, $request, $model) {
+        $res = $this->transaction(function () use ($data, $request, $model) {
             $this->prepareData($data, $request);
             $res = $this->store->store($data, $this->options);
             if (!is_string($res) && !is_numeric($res)) $this->finalizeData($res);
