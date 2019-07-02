@@ -18,7 +18,7 @@ class NotificationUserDefaultPermission extends PermissionModel
         // ID provided
         if (isset($id)) {
             $notif = (new $model)->find($id);
-            return $notif->user_id == $user->id;
+            return isset($notif->user_id) && $notif->user_id == $user->id;
         }
 
         // Batch request
