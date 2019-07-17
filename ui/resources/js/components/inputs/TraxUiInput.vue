@@ -5,7 +5,7 @@
             <div class="input-group-prepend">
                 <span class="input-group-text">
                     <i class="material-icons">{{ icon }}</i>
-                    <span class="trax-required" v-if="required">*</span>
+                    <span class="trax-required" v-if="required || markRequired">*</span>
                 </span>
             </div>
             <textarea class="form-control" v-if="rows"
@@ -35,7 +35,7 @@
         <div class="row" v-else-if="col">
             <label :class="labelClass" style="padding-top:1.7rem;">
                 {{ placeholder }}
-                <span class="trax-required" v-if="required">*</span>
+                <span class="trax-required" v-if="required || markRequired">*</span>
             </label>
             <div :class="formColClass">
                 <textarea class="form-control" v-if="rows" 
@@ -98,7 +98,22 @@
 <script>
     export default {
 
-        props: ['type', 'step', 'icon', 'col', 'placeholder', 'rows', 'value', 'error', 'help', 'maxlength', 'required', 'disabled', 'autofocus'],
+        props: [
+            'type', 
+            'step', 
+            'icon', 
+            'col', 
+            'placeholder', 
+            'rows', 
+            'value', 
+            'error', 
+            'help', 
+            'maxlength', 
+            'required', 
+            'markRequired', 
+            'disabled', 
+            'autofocus'
+        ],
 
         data() {
             return {
