@@ -55,6 +55,12 @@ interface DataStoreInterface
     public function store($data, $options = array());
 
     /**
+     * Store a set of data.
+     * $dataset must be an array of data.
+     */
+    public function bulkStore($dataset);
+
+    /**
      * Update a data.
      * $data must be an associative array or a valid JSON string.
      * 

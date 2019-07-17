@@ -256,6 +256,25 @@ class DataStoreDatabase implements DataStoreInterface
         //Cache::increment('table.'.$this->table.'.count');
         return $this->modelOutput($model, $options);
     }
+
+    /**
+     * Store a set of data.
+     */
+    public function bulkStore($dataset)
+    {
+        // Prepare data
+        $records = array_map(function ($data) {
+            return $this->dataInput($data, []);
+        }, $dataset);
+
+        // Insert dataset
+        $this->clearBuilder();
+        try {
+            $this->builder->insert($records);
+        } catch (\Exception $e) {
+            throw new DatabaseException('bulk insert exception.');
+        }
+    }
     
     /**
      * Update a data.
