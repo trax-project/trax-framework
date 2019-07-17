@@ -34,7 +34,7 @@
     @yield('head')
 
     <!-- Trax CSS -->
-    <link rel="stylesheet" href="{{ asset('themes/'.config('trax.ui.theme').'/trax/common.css?v=20190619') }}">
+    <link rel="stylesheet" href="{{ asset('themes/'.config('trax.ui.theme').'/trax/common.css?v=20190717') }}">
     <link rel="stylesheet" href="{{ asset('themes/'.config('trax.ui.theme').'/trax/style.css') }}">
 
     <!-- Title -->
