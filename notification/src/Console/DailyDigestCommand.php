@@ -30,13 +30,17 @@ class DailyDigestCommand extends Command
 
         // Get subscribers
         if (config('trax-notification.default.digest')) {
-            $search = [[
-                (object)['key' => 'data.preferences.daily_digest', 'operator' => 'BOOL', 'value' => true],
-                (object)['key' => 'data.preferences.daily_digest', 'operator' => 'NULL']
-            ]];
+            $search = [
+                [
+                    (object)['key' => 'data.preferences.daily_digest', 'operator' => 'BOOL', 'value' => true],
+                    (object)['key' => 'data.preferences.daily_digest', 'operator' => 'NULL']
+                ],
+                (object)['key' => 'active', 'operator' => 'BOOL', 'value' => true],
+            ];
         } else {
             $search = [
                 (object)['key' => 'data.preferences.daily_digest', 'operator' => 'BOOL', 'value' => true],
+                (object)['key' => 'active', 'operator' => 'BOOL', 'value' => true],
             ];
         }
         $subscribers = TraxAccount::users()->get(['search' => $search]);
