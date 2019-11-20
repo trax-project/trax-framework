@@ -47,11 +47,12 @@
             if (this.bus) {
                 this.bus.$on(this.id+'-refresh', this.refresh);
                 this.bus.$on(this.id+'-filter', this.filter);
+                this.bus.$on(this.id+'-init-filter', this.initFilter);
             }
         },
         
         mounted: function() {
-            this.init();
+            setTimeout(this.init, 1); 
         },
         
         methods: {
@@ -141,6 +142,10 @@
             refresh() {
                 this.dataTable.ajax.reload(null, true);
             },
+
+            initFilter(filters) {
+                this.filters = filters ? filters : {};
+            }, 
 
             filter(filters) {
                 this.filters = filters ? filters : {};
