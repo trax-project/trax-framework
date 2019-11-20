@@ -18,6 +18,7 @@
             headerColor: { default: 'primary' },
             paging: { default: 1 },
             searching: { default: 1 },
+            initFilters: null,
             lengthChange: { default: 1 },
             emptyMessage: null,
             orderColumn: null,
@@ -28,11 +29,21 @@
         data: function() {
             return {
                 dataTable: null,
-                filters: {}
+                externalFilters: null
             };
         },
 
         computed: {
+
+            filters: function() {
+                if (this.externalFilters) return this.externalFilters;
+                if (this.initFilters) return this.initFilters;
+                return {};
+            },
+
+            order: function() {
+                return this.orderColumn && this.orderDir ? [[this.orderColumn, this.orderDir]] : [];
+            },
 
             order: function() {
                 return this.orderColumn && this.orderDir ? [[this.orderColumn, this.orderDir]] : [];
@@ -47,12 +58,11 @@
             if (this.bus) {
                 this.bus.$on(this.id+'-refresh', this.refresh);
                 this.bus.$on(this.id+'-filter', this.filter);
-                this.bus.$on(this.id+'-init-filter', this.initFilter);
             }
         },
         
         mounted: function() {
-            setTimeout(this.init, 1); 
+            this.init(); 
         },
         
         methods: {
@@ -143,12 +153,8 @@
                 this.dataTable.ajax.reload(null, true);
             },
 
-            initFilter(filters) {
-                this.filters = filters ? filters : {};
-            }, 
-
             filter(filters) {
-                this.filters = filters ? filters : {};
+                this.externalFilters = filters ? filters : {};
                 this.refresh();
             }
         }
