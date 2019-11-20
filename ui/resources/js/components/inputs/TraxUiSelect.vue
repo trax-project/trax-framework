@@ -153,6 +153,10 @@
                     that.$emit('input', this.value);
                 }
             });
+
+            // Force initial value.
+            $('.selectpicker#'+this.id).selectpicker('refresh');
+            $('.selectpicker#'+this.id).selectpicker('val', this.value);
         },
 
         updated: function () {
