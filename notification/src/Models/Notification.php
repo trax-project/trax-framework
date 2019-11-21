@@ -23,14 +23,22 @@ class Notification extends NotificationModel
      * The attributes that should be visible.
      */
     protected $visible = [
-        'id', 'data', 'title', 'context', 'styled_context', 'message', 'actionLabel', 'created_at', 'updated_at'
+        'id', 'data', 'title', 'context', 'styled_context', 'message', 'actionLabel', 'metadata', 'created_at', 'updated_at'
     ];
 
     /**
      * The accessors to append to the model's array form.
      */
-    protected $appends = ['title', 'context', 'styled_context', 'message', 'actionLabel'];
+    protected $appends = ['title', 'context', 'styled_context', 'message', 'actionLabel', 'metadata'];
 
+
+    /**
+     * Metadata.
+     */
+    public function getMetadataAttribute($value)
+    {
+        return isset($this->data->metadata) ? $this->data->metadata : [];
+    }
 
     /**
      * Title.

@@ -17,6 +17,11 @@ abstract class EventNotification extends NativeNotification
     protected $event;
 
     /**
+     * Notification message metadata.
+     */
+    protected $metadata = [];
+
+    /**
      * Notification title.
      */
     protected $title;
@@ -92,12 +97,21 @@ abstract class EventNotification extends NativeNotification
     protected function defineRecord()
     {
         return [
+            'metadata' => $this->defineMetadata(),
             'title' => $this->defineTitle(),
             'context' => $this->defineContext(),
             'styled_context' => $this->defineStyledContext(),
             'message' => $this->defineMessage(),
             'action' => $this->defineAction(),
         ];
+    }
+
+    /**
+     * Define metadata.
+     */
+    protected function defineMetadata()
+    {
+        return $this->metadata;
     }
 
     /**
