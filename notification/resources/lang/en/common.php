@@ -6,6 +6,7 @@ return [
     'notifications' => 'Notifications',
     'new' => 'New',
     'delete_message' => 'Delete Message',
+    'delete_all_messages' => 'Delete All',
     'no_notification' => "You don't have any notification.",
     'no_unread_notification' => "No unread notification.",
     'display_all_notifications' => "Display all notifications",
