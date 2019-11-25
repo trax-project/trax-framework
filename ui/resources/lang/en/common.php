@@ -7,6 +7,7 @@ return [
     'welcome' => 'Welcome',
     'users' => 'Users',
     'training' => 'Training',
+    'reports' => 'Reports',
     'data' => 'Data',
     'test' => 'Test',
     'settings' => 'Settings',

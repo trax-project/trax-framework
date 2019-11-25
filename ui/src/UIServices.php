@@ -37,6 +37,11 @@ class UIServices
             'title' => 'trax-ui::common.training',
             'children' => [],
         ],
+        'reports' => [
+            'icon' => 'bar_chart',
+            'title' => 'trax-ui::common.reports',
+            'children' => [],
+        ],
         'data' => [
             'icon' => 'dns',
             'title' => 'trax-ui::common.data',
