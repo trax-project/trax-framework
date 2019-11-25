@@ -62,10 +62,10 @@ abstract class DataStoreServices
      * Get a data store.
      */
     protected function store($modelName = 'Data', $prefix = '') {
-        if (isset($stores[$modelName])) return $stores[$modelName];
+        if (isset($this->stores[$modelName])) return $this->stores[$modelName];
         $storeClass = $this->storeClass($modelName, $prefix);
         $store = new $storeClass($this->app, traxConnection($this->plugin, $modelName), $this->dbTable($modelName), $this->modelClass($modelName));
-        $stores[$modelName] = $store;
+        $this->stores[$modelName] = $store;
         return $store;
     }
 
