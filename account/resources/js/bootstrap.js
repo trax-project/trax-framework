@@ -22,6 +22,7 @@ Vue.component('trax-account-role-edit-permissions', require('./components/role-e
 Vue.component('trax-account-user-crud', require('./components/user-crud/TraxAccountUserCrud.vue').default);
 Vue.component('trax-account-user-crud-form', require('./components/user-crud/TraxAccountUserCrudForm.vue').default);
 Vue.component('trax-account-user-crud-table', require('./components/user-crud/TraxAccountUserCrudTable.vue').default);
+Vue.component('trax-account-user-crud-search', require('./components/user-crud/TraxAccountUserCrudSearch.vue').default);
 
 // User edit
 Vue.component('trax-account-user-edit', require('./components/user-edit/TraxAccountUserEdit.vue').default);

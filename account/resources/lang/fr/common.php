@@ -88,6 +88,7 @@ return [
     'no_entity' => "Pas d'entité",
     'no_function' => "Aucune fonction",
     'no_role' => "Aucun rôle",
+    'all_roles' => "Tous les rôles",
     'admin_account' => 'Super administrateur',
     'user_deletion_exception' => "
         Cet utilisateur ne peut être supprimé car il appartient à un groupe d'apprenants.

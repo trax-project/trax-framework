@@ -100,6 +100,13 @@
                     deferRender: true,
                     processing: false,
                     stateSave: true,
+                    stateSaveParams: function (settings, data) {
+                        data.filters = that.filters;
+                    },
+                    stateLoadParams: function (settings, data) {
+                        that.filters = data.filters;
+                        that.bus.$emit(that.id+'-filter-restore', that.filters);
+                    },
                     ajax: {
                         url: that.endpoint,
                         data: function(data) {

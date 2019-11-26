@@ -63,6 +63,7 @@ class UserStore extends UserStoreSwitch
      */
     protected $filters = [
         'ids' => ['type' => 'In', 'target' => 'id'],
+        'role_id' => ['type' => 'Equal', 'target' => 'role_id'],
     ];
 
 

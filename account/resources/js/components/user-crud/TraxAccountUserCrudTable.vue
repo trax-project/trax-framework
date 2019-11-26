@@ -2,7 +2,8 @@
 
     <trax-ui-ajax-table-with-crud-actions 
         :id="id" :titles="titles" :props="props" :bus="bus" 
-        :endpoint="endpoint" :edit-url="edit_url">
+        :endpoint="endpoint" :endpoint-params="endpointParams" 
+        :edit-url="edit_url">
     </trax-ui-ajax-table-with-crud-actions>
     
 </template>
@@ -12,15 +13,17 @@
     
         props: ['bus', 'withUsername'],
 
-        data: function() {
+        data() {
             var titles = [
                 lang.trax_account.common.email,
                 lang.trax_account.common.fullname,
+                lang.trax_account.common.role,
                 ''
             ];
             var props = [
                 {source: this.email},
-                {source: this.fullname, order: 'lastname'}
+                {source: this.fullname, order: 'lastname'},
+                {source: this.role, orderable: false }
             ];
             if (this.withUsername) {
                 titles.unshift(lang.trax_account.common.username);
@@ -28,6 +31,9 @@
             }
             return {
                 endpoint: app_url+"trax/ajax/account/users",
+                endpointParams: {
+                    with: ['role']
+                },
                 edit_url: app_url+"trax/ui/account/user/edit",
                 titles: titles,
                 props: props,
@@ -49,6 +55,11 @@
 
             username(data, type, row, meta) {
                 return this.active(row, row.username);
+            },
+
+            role(data, type, row, meta) {
+                if (!row.role) return '';
+                return this.active(row, row.role.data.name);
             },
 
             active(row, content) {

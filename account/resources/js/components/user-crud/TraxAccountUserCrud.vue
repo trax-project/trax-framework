@@ -19,6 +19,12 @@
             {{ lang.trax_account.common.confirm_delete_account_q }}
         </trax-ui-modal-confirm>
     
+        <!-- Search modal -->
+
+        <trax-ui-modal-default id="trax-account-user-search" :bus="bus" :title="lang.trax_ui.form.advanced_search">
+            <trax-account-user-crud-search id="trax-account-user" :bus="bus"></trax-account-user-crud-search>
+        </trax-ui-modal-default>
+
         <!-- Toastr -->
 
         <trax-ui-toastr id="trax-account-user-toastr" :bus="bus" passed-label="1" no-progress="1">
@@ -36,6 +42,7 @@
             return {
                 lang: lang,
                 card_actions: [
+                    { icon: 'search', event: 'trax-account-user-search-open' },
                     { icon: 'add_box', event: 'trax-account-user-edit-create' }
                 ],
                 bus: new Vue()

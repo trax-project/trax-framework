@@ -83,6 +83,7 @@ return [
     'no_entity' => 'No entity',
     'no_function' => "No function",
     'no_role' => "No role",
+    'all_roles' => "All roles",
     'admin_account' => 'Super administrator',
     'user_deletion_exception' => "
         This user can't be deleted because it belongs to a group of learners.
