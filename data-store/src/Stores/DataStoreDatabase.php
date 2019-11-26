@@ -441,8 +441,9 @@ class DataStoreDatabase implements DataStoreInterface
         if (!$this->virtualColumnsSupported) return;
         $globalSearchScopes = [];
         foreach($this->globalSearchScopes as $column) {
-            if (isset($this->virtualColumns[$column])) $globalSearchScopes[] = $this->virtualColumns[$column];
-            else $globalSearchScopes[] = $column;
+            //if (isset($this->virtualColumns[$column])) $globalSearchScopes[] = $this->virtualColumns[$column];
+            //else      // Must be tested !!!!!!!!!! 
+            $globalSearchScopes[] = $column;
         }
         $this->globalSearchScopes = $globalSearchScopes;
     }
