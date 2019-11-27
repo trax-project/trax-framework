@@ -21,13 +21,13 @@
                 ''
             ];
             var props = [
-                {source: this.email},
+                {source: this.email, order: 'email'},
                 {source: this.fullname, order: 'lastname'},
-                {source: this.role, orderable: false }
+                {source: this.role, order: 'role.data.name' }
             ];
             if (this.withUsername) {
                 titles.unshift(lang.trax_account.common.username);
-                props.unshift({source: this.username, class: 'font-weight-bold'});
+                props.unshift({source: this.username, order: 'username', class: 'font-weight-bold'});
             }
             return {
                 endpoint: app_url+"trax/ajax/account/users",
