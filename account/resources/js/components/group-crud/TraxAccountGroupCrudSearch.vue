@@ -33,6 +33,14 @@
             }
         },
         
+        created: function() {
+            var that = this;
+
+            this.bus.$on(this.id+'-filter-restore', function (data) {
+                that.form = data;
+            });
+        },
+        
         methods: {
 
             search() {
