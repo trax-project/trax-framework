@@ -113,11 +113,12 @@ class TraxServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $this->registerPublications();
+
         if (!$this->enabled()) return;
 
         $this->registerMiddlewares();
         $this->registerMigrations();
-        $this->registerPublications();
         $this->registerValidationRules();
         $this->registerExceptionHandler();
         $this->registerUI();
