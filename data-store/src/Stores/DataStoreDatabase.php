@@ -360,7 +360,7 @@ class DataStoreDatabase implements DataStoreInterface
     public function clear()
     {
         $this->clearBuilder();
-        $this->builder->truncate();
+        $this->builder->delete();
         //Cache::forever('table.'.$this->table.'.count', 0);
     }
 
