@@ -50,7 +50,7 @@ class PermissionsManager
      */
     public function check($request, $type, $user, $model, $id = null)
     {
-        $permissions = $user->role->permissions;
+        $permissions = $user->role ? $user->role->permissions : [];
         $permissions = $this->filterPermissions($permissions);
         list($permission, $rights) = $this->getPermissionAndRights($type, $model, $permissions);
 

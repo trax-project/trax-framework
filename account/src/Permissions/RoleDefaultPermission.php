@@ -15,7 +15,7 @@ class RoleDefaultPermission extends PermissionModel
         if ($type == 'create') return false;
 
         // ID provided
-        if (isset($id)) return $id = $user->role_id;
+        if (isset($id)) return $id == $user->role_id;
 
         // Batch request
         return ['id' => $user->role_id];

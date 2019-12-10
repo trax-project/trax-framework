@@ -72,7 +72,6 @@ trait DataStoreAuthorizer
         if ($user->admin) return isset($id) ? true : [];
 
         // Otherwise...
-        if (!$user->role) throw new ForbiddenException();
         $searchArgs = TraxAccount::permissions()->check($request, $type, $user, $this->dataAuthorizerModel, $id);
         if ($searchArgs === false) throw new ForbiddenException();
         return $searchArgs;
