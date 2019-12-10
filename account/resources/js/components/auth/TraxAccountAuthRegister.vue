@@ -36,7 +36,7 @@
     
         props: ['withUsername', 'firstname', 'lastname', 'email', 'color'],
         
-        data: function() {
+        data() {
             return {
                 lang: lang,
                 home_url: app_url,
@@ -59,7 +59,7 @@
             }
         },
         
-        created: function() {
+        created() {
             var that = this;
 
             this.bus.$on('trax-account-auth-register-errors', function(errors) {
@@ -69,6 +69,18 @@
             this.bus.$on('trax-account-auth-register-created', function(request) {
                 window.location = that.home_url;
             });
+        },
+
+        watch: {
+
+            form: {
+                handler: function(value) {
+                    if (!this.withUsername) {
+                        this.form.username = this.form.email;
+                    }
+                },
+                deep: true
+            }
         }
     }
 </script>
