@@ -105,7 +105,7 @@
                     searching: parseInt(that.searching),
                     lengthChange: parseInt(that.lengthChange),
                     drawCallback: function () {
-                        $('.dataTables_paginate > .pagination').addClass('pagination-'+that.headerColor);
+                        $('#'+that.id+'-table_paginate > .pagination').addClass('pagination-'+that.headerColor);
                     }
                 };
                 if (that.emptyMessage) datatableSettings.language.zeroRecords = that.emptyMessage;
